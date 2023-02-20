@@ -1,0 +1,77 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amsfonts} % \mathbb
+% \usepackage{centernot}
+
+\title{
+	Appunti di Algebra \\
+	\large Corso di Ingegneria e Scienze Informatiche - 1 anno
+}
+\author{Mattia Ronchi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduzione}
+
+\subsection{Relazioni}
+Una \textbf{relazione} é un sottoinsieme del prodotto cartesiano di due o piú insiemi.\\
+Una relazione su $A$ é un sottoinsieme di $A \times A$. \\\\
+$a_{1}$ é in relazione con $a_{2}$ e si scrive $a_{1} R a_{2}$. \\
+Def. Una relazione é di \textbf{equivalenza} se rispetta le seguenti proprietá:
+\begin{itemize}
+	\item[] Riflessiva: $a R a$ $\forall a \in A$ (ogni elemento é in relazione con se stesso)
+	\item[] Simmetrica: $a_{1} R a_{2} \implies a_{2} R a_{1}$ $\forall a_{1}, a_{2} \in A$
+	\item[] Transitiva: $a_1 R a_2 \wedge a_2 R a_3 \implies a_1 R a_3$
+\end{itemize}
+
+\subsection{Funzioni/Applicazioni}
+$f : X \rightarrow Y$\\\\
+$f$ iniettiva: $\forall x_1, x_2 \in X, f(x_1) = f(x_2) \implies x_1=x_2$ \\
+$f$ suriettiva: $\forall y \in Y, \exists x \in A : y = f(x)$ \\
+$f$ biettiva: $\forall y \in Y, \exists! x \in A : y = f(x)$
+
+\subsection{Insiemi numerici}
+L'insieme dei numeri razionali $\mathbb{Q}$ introduce gli inversi del prodotto (es. $3 \rightarrow \frac{1}{3}$). \\
+L'insieme dei numeri reali $\mathbb{R}$ introduce limiti, radici e altri valori. \\
+L'insieme dei numeri complessi $\mathbb{C}$ introduce le radici di indice pari di numeri negativi tramite l'unitá immaginaria $i$ e i suoi multipli. Un numero complesso é esprimibile in forma polare come $a+ib$, con $a,b \in R$.
+
+\subsection{Campi}
+$(K, +, \cdot)$ é un campo se:
+\begin{itemize}
+	\item[] $+, \cdot$ sono associative ($a+(b+c) = (a+b)+c$), commutative ($a+b=b+a$) e distributive ($a(b+c)=ab+ac$)
+	\item[] esistono elementi \textbf{neutri} ($0$ per la somma ($a+0=a$), $1$ per il prodotto ($a \cdot 1 = a$)) e \textbf{opposti} ($-a$ per la somma ($a-a=0$), $x^{-1}$ per il prodotto ($x \cdot x^{-1} = 1$), che restituscono il valore neutro
+\end{itemize}
+Alcuni insiemi campi sono $\mathbb{Q}, \mathbb{R}, \mathbb{C}$.
+
+\subsubsection{Campi finiti}
+Dato un numero intero $n \ge 0$, definiamo su $\mathbb{Z}$ la relazione di equivalenza
+$$a \equiv b (n) \iff \exists k \in Z : a - b = k \cdot n$$
+essa rispetta tutte e 3 le proprietá elencate sopra. \\\\
+Definiamo $[b] = \{a \in Z : a \equiv b (n)\}$ e $Z_n = \{[0], [1], ..., [n-1]\}$. \\
+Es. in $Z_2 = \{[0], [1]\}$, $[0]$ sono i numeri pari, $[1]$ quelli dispari. \\\\
+Definiamo su $Z_n$ le operazioni:\\
+$$[a] + [b] = [a+b], [a] \cdot [b] = [a \cdot b]$$ \\
+Es. Possiamo scrivere, con la notazione dei campi finiti, il prodotto tra numeri interi: \\
+Dato $Z_2$: $[0] \cdot [0] = [0], [0] \cdot [1] = [0 \cdot 1] = [0], [1] \cdot [1] = [1 \cdot 1] = [1]$. \\\\
+$Z_n$ é un campo $\iff n$ é \textbf{primo}. Se $n$ non é primo, non esisterá l'inverso di un fattore di $n$, ovvero non esisterá nessuna classe di elementi che se moltiplicata con la classe del fattore restituisca classe 1.
+
+\subsection{Spazi vettoriali}
+Uno \textbf{spazio vettoriale} definito su un campo $K$ é un insieme $V$ con due operazioni:
+\begin{itemize}
+	\item[] $+ : V \times V \rightarrow V$ ($v_1, v_2) \rightarrow v_1 + v_2$)
+	\item[] $\cdot : K \times V \rightarrow V$ ($a, v \rightarrow av$)
+\end{itemize}
+che verificano le seguenti proprietá: $+$ é commutativa, associativa, con elem. neutri (vettore nullo) e opposti ($-v$), $\cdot$ é associativa, distribuitiva rispetto alla somma e con elemento neutro.\\\\
+Per ogni campo $K$, $K^n$ é uno spazio vettoriale su $K$.\\
+$K^n = \{(x_1, x_2, ..., x_n), x_i \in K, \forall i=1, ..., n\} \\
+v = (x_1, x_2, ..., x_n), u = (y_1, y_2, ..., y_n) \\
+v + u = (x_1 + y_1, x_2 + y_2, ..., x_n + y_n) \\
+av = (ax_1, ax_2, ..., ax_n), a \in K
+$
+
+\end{document}
