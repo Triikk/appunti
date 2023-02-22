@@ -43,7 +43,7 @@ L'insieme dei numeri complessi $\mathbb{C}$ introduce le radici di indice pari d
 $(K, +, \cdot)$ é un campo se:
 \begin{itemize}
 	\item[] $+, \cdot$ sono associative ($a+(b+c) = (a+b)+c$), commutative ($a+b=b+a$) e distributive ($a(b+c)=ab+ac$)
-	\item[] esistono elementi \textbf{neutri} ($0$ per la somma ($a+0=a$), $1$ per il prodotto ($a \cdot 1 = a$)) e \textbf{opposti} ($-a$ per la somma ($a-a=0$), $x^{-1}$ per il prodotto ($x \cdot x^{-1} = 1$), che restituscono il valore neutro
+	\item[] esistono elementi \textbf{neutri} ($0$ per la somma ($a+0=a$), $1$ per il prodotto ($a \cdot 1 = a$)) e \textbf{opposti} ($-a$ per la somma ($a-a=0$), $x^{-1}$ per il prodotto ($x \cdot x^{-1} = 1$)), che restituscono il valore neutro
 \end{itemize}
 Alcuni insiemi campi sono $\mathbb{Q}, \mathbb{R}, \mathbb{C}$.
 
@@ -62,7 +62,7 @@ $Z_n$ é un campo $\iff n$ é \textbf{primo}. Se $n$ non é primo, non esisterá
 \subsection{Spazi vettoriali}
 Uno \textbf{spazio vettoriale} definito su un campo $K$ é un insieme $V$ con due operazioni:
 \begin{itemize}
-	\item[] $+ : V \times V \rightarrow V$ ($v_1, v_2) \rightarrow v_1 + v_2$)
+	\item[] $+ : V \times V \rightarrow V$ ($v_1, v_2) \rightarrow v_1 + v_2$
 	\item[] $\cdot : K \times V \rightarrow V$ ($a, v \rightarrow av$)
 \end{itemize}
 che verificano le seguenti proprietá: $+$ é commutativa, associativa, con elem. neutri (vettore nullo) e opposti ($-v$), $\cdot$ é associativa, distribuitiva rispetto alla somma e con elemento neutro.\\\\
@@ -86,7 +86,7 @@ Graficamente, significa che la somma di qualsiasi coppia di vettori presenti sul
 $U$ é un SSV di $V \iff \forall u_1, u_2 \in U, \forall a_1, a_2 \in K$.\\
 Dimostrazione:
 \begin{itemize}
-	\item[$\Rightarrow$]: se $U$ é un SSV di V e $u_1, u_2 \ in U \implies a_1 u_1, a_2 u_2 \in U \implies a_1 u_1 + a_2 u_2$
+	\item[$\Rightarrow$]: se $U$ é un SSV di V e $u_1, u_2 \in U \implies a_1 u_1, a_2 u_2 \in U \implies a_1 u_1 + a_2 u_2$
 	\item[$\Leftarrow$]: se $a_1 u_1 + a_2 u_2 \in U \forall a_1, a_2 \in K$, in particolare: prendendo $a_1 = 1, a_2 = 1, u_1 + u_2 \in U$, prendendo $a_1$ qualsiasi e $a_2 = 0, a_1 u_1 \in U$
 \end{itemize}
 
@@ -96,7 +96,7 @@ Per quanto osservato sopra, $U$ é un SSV $\iff$ contiene \textit{tutte le combi
 Esempio: $V = R^2, v_1 = (1,0), v_2 = (0,1), v_3 = (3, -2)$. $v_3 = 3v_1 -2v_2$ quindi $v_3$ é combinazione lineare di $v_1, v_2$. Altro esempio: $u_1 = (2,0), u_2 = (-1, 0), u_3 = (3, -2)$. $u$ in questo caso non é combinazione lineare di $u_1, u_2$ perché non é possibile ottenere la seconda coordinata -2 essendo 0 in entrambi.
 
 \subsection{Span}
-Un SSV $U$ di $V$ é \textbf{generato} da $\{v_1, \dots, v_n\}$ se ogni elemento $u \in U$ é combinazione lineare di $v_1, \dots, v_n$, cioé se $\forall u \ in U, \exists a_1, \dots, a_n \in K : u = a_1 v_1 + \dots + a_n v_n$. $U$ é lo \textbf{span} di $\{v_1, \dots, v_n\}$ ed é scritto $U = \langle v_1, \dots, v_n \rangle$. Si noti che l'insieme contiene infiniti elementi, siccome infinite sono le combinazioni lineari ottenibili ($a_1, \dots, a_n \in R$).\\\\
+Un SSV $U$ di $V$ é \textbf{generato} da $\{v_1, \dots, v_n\}$ se ogni elemento $u \in U$ é combinazione lineare di $v_1, \dots, v_n$, cioé se $\forall u \in U, \exists a_1, \dots, a_n \in K : u = a_1 v_1 + \dots + a_n v_n$. $U$ é lo \textbf{span} di $\{v_1, \dots, v_n\}$ ed é scritto $U = \langle v_1, \dots, v_n \rangle$. Si noti che l'insieme contiene infiniti elementi, siccome infinite sono le combinazioni lineari ottenibili ($a_1, \dots, a_n \in R$).\\\\
 Esempio: $
 V = R^4 = \{(x,y,z,w), x,y,z,w \in R\}, \\
 v_1 = (2,0,0,0), v_2 = (0,1,-1,0)
