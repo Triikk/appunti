@@ -7,9 +7,8 @@
 
 \title{
 	Appunti di Algebra \\
-	\large Corso di Ingegneria e Scienze Informatiche - 1 anno
+	\large A.A. 2023/2024
 }
-\author{Mattia Ronchi}
 \date{}
 
 \begin{document}
@@ -73,5 +72,51 @@ v = (x_1, x_2, ..., x_n), u = (y_1, y_2, ..., y_n) \\
 v + u = (x_1 + y_1, x_2 + y_2, ..., x_n + y_n) \\
 av = (ax_1, ax_2, ..., ax_n), a \in K
 $
+
+\subsection{Sottospazi vettoriali}
+Un sottoinsieme non vuoto (contenente almeno il vettore nullo) $U \subseteq V$ (spazio vettoriale su $K$) é un \textbf{sottospazio vettoriale} (SSV) di V se é \textbf{chiuso} rispetto alle sue operazioni, cioé:
+\begin{itemize}
+	\item $\forall v_1, v_2 \in U \rightarrow v_1 + v_2 \in U$
+	\item $\forall v_1 \in U, a \in K, a \cdot v_1 \in U$
+\end{itemize}
+Esempio: $V = R^2$ spazio vettoriale su R, $U = \{(x,y) \in R^2 : y = 2x\}$. É un SSV?\\
+Se $v_1, v_2 \in U: v_1 = (x_1, y_1) \rightarrow y_1 = 2x_1, v_2 = (x_2, y_2) \rightarrow y_2 = 2x_2$\\
+$v_1 + v_2 = (x_1 + x_2, 2x_1 + 2x_2) \rightarrow (x_1 + x_2, 2(x_1 + x_2)) \implies v_1 + v_2 \in U$. Inoltre, $\forall a \in R, a \cdot v_1 = a(x_1, 2ax_1) \implies a \cdot v_1 \in U$. Quindi, $U$ é un SSV di $V$.\\
+Graficamente, significa che la somma di qualsiasi coppia di vettori presenti sulla retta $y=2x$ é un vettore sempre giacente su questa retta, cosí come il prodotto di qualsiasi vettore giacente sulla retta per un qualsiasi scalare é un vettore sempre giacente su questa retta.\\\\
+$U$ é un SSV di $V \iff \forall u_1, u_2 \in U, \forall a_1, a_2 \in K$.\\
+Dimostrazione:
+\begin{itemize}
+	\item[$\Rightarrow$]: se $U$ é un SSV di V e $u_1, u_2 \ in U \implies a_1 u_1, a_2 u_2 \in U \implies a_1 u_1 + a_2 u_2$
+	\item[$\Leftarrow$]: se $a_1 u_1 + a_2 u_2 \in U \forall a_1, a_2 \in K$, in particolare: prendendo $a_1 = 1, a_2 = 1, u_1 + u_2 \in U$, prendendo $a_1$ qualsiasi e $a_2 = 0, a_1 u_1 \in U$
+\end{itemize}
+
+\subsection{Combinazione lineare}
+Dati $v_1, v_2, \dots, v_n \in V$, diciamo che $v \in V$ é una \textbf{combinazione lineare} di $v_1, v_2, \dots, v_n$ se $\exists a_1, a_2, \dots, a_n \in K : v = a_1 v_1 + a_2 v_2 + \dots + a_n v_n$, quindi se $v$ é esprimibile come la somma di tutti i vettori di $V$ moltiplicati per un corrispettivo scalare.\\
+Per quanto osservato sopra, $U$ é un SSV $\iff$ contiene \textit{tutte le combinazioni lineari} di \textit{tutti i suoi elementi}. Non esiste una combinazione lineare $u$ degli elementi di $U$ che non sia $\in U$.\\\\
+Esempio: $V = R^2, v_1 = (1,0), v_2 = (0,1), v_3 = (3, -2)$. $v_3 = 3v_1 -2v_2$ quindi $v_3$ é combinazione lineare di $v_1, v_2$. Altro esempio: $u_1 = (2,0), u_2 = (-1, 0), u_3 = (3, -2)$. $u$ in questo caso non é combinazione lineare di $u_1, u_2$ perché non é possibile ottenere la seconda coordinata -2 essendo 0 in entrambi.
+
+\subsection{Span}
+Un SSV $U$ di $V$ é \textbf{generato} da $\{v_1, \dots, v_n\}$ se ogni elemento $u \in U$ é combinazione lineare di $v_1, \dots, v_n$, cioé se $\forall u \ in U, \exists a_1, \dots, a_n \in K : u = a_1 v_1 + \dots + a_n v_n$. $U$ é lo \textbf{span} di $\{v_1, \dots, v_n\}$ ed é scritto $U = \langle v_1, \dots, v_n \rangle$. Si noti che l'insieme contiene infiniti elementi, siccome infinite sono le combinazioni lineari ottenibili ($a_1, \dots, a_n \in R$).\\\\
+Esempio: $
+V = R^4 = \{(x,y,z,w), x,y,z,w \in R\}, \\
+v_1 = (2,0,0,0), v_2 = (0,1,-1,0)
+$. Il sottospazio generato da $v_1, v_2$ é $\langle v_1, v_2 \rangle = \{a_1 v_1 + a_2 v_2, a_1, a_2 \in R\} = (2a_1,0,0,0) + (0,a_2,-a_2,0) = (2a_1,a_2,-a_2,0) = \{(x,y,z,w) \in R^4 : y + z = 0, w = 0\}$.\\
+Altro esempio: $V = R[x], \langle x^2, x, 1 \rangle = \{ax^2+bx+c, a,b,c \in R\} = \{$ tutti i polinomi di grado $\leq 2\}$ (con $a=0$ il grado é $< 2$).
+
+\subsection{Indipendenza lineare}
+Un insieme di vettori $\{v_1, \dots, v_2\}$ é \textbf{linearmente indipendente} se \textit{nessun vettore} é la combinazione lineare degli altri vettori dell'insieme, ovvero se l'\textit{unica combinazione lineare di} $v_1, \dots, v_n$ che restituisce il vettore nullo é quella con tutti i coefficienti $a_1, \dots, a_n \in K = 0$. Questo perché se un vettore é combinazione lineare di un insieme di vettori (es. $v_3 = 2v_1 + 4v_2$), basta dare i giusti coefficienti ($a_1=2, a_2=4, a3=-1)$ per fare in modo che si annullino e mettere i coefficienti degli altri vettori a 0.\\\\
+Un insieme di vettori é \textbf{linearmente dipendente} se non é linearmente indipendente. Non é peró detto che ogni vettore apparentenente a un insieme linearmente dipendente sia combinazione lineare di altri (es. $v_1 = (1,0), v_2 = (2,0), v_3 = (0,1) \rightarrow v_2=2v1$ ma $v_3$ non é combinazione lineare di $v_1, v_2$), é sufficiente che una coppia di vettori sia ricavabile l'una dall'altra per rendere tutto l'insieme linearmente dipendente.
+
+\subsubsection{Equivalenza definizioni di indipendenza lineare}
+\begin{enumerate}
+	\item Nessun vettore tra $v_1, \dots, v_n$ é combinazione lineare degli altri
+	\item Se $a_1v_1 + \dots + a_nv_n = 0 \implies a_1=0, \dots,a_n=0$
+\end{enumerate}
+Se la 1 é falsa, $\exists v_i$ (supponiamo per semplicitá sia $v_1$) che é combinazione lineare degli altri, quindi $v_1 = a_2v_2 + \dots + a_nv_n \iff v_1 - a_2v_2 - \dots - a_nv_n = 0 \implies$ la 2 é anch'essa falsa perché i coefficienti non sono per forza tutti 0 (sicuramente $a_1=1$).\\
+Se la 2 é falsa significa che $\exists a_1, \dots, a_n$ con almeno un $a_i \ne 0 : a_1v_1 + \dots + a_nv_n = 0$, allora $\displaystyle v_i = \frac{a_1}{a_i}v_1 + \dots + \frac{a_n}{a_i}v_n \implies$ la 1 é anch'essa falsa siccome $v_i$ é combinazione lineare degli altri.
+
+\subsection{Base}
+Sia $V$ uno spazio vettoriale su $K$, $\{v_1, \dots, v_n\}$ é una \textbf{base} di $V$ se $\{v_1, \dots, v_n\}$ é \textbf{indipendente} e \textbf{genera V}.\\
+Ad esempio, per $V=R^2, \{(1,0),(0,1)\}$ é indipendente e genera $R^2$, quindi é una base, mentre $\{(1,0), (0,1), (1,1)\}$ genera $R^2$ ma é lineramente dipendente, quindi non é una base.
 
 \end{document}
