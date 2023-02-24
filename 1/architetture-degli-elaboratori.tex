@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\graphicspath{ {./images/architetture-degli-elaboratori/} }
+
+\title{
+	Appunti di Architetture degli elaboratori \\
+	\large A.A. 2022/2023
+}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Fondamenti}
+\subsection{Calcolatore}
+\textit{Un computer digitale é una macchina in grado di risolvere problemi eseguendo istruzioni appositamente specificate.}\\\\
+In un calcolatore possono quindi essere individuati:
+\begin{itemize}
+	\item \textit{hardware}: componenti \textbf{fisiche} del calcolatore (es. circuiti integrati, periferiche, ecc.)
+	\item \textit{sofware}: insieme di \textbf{istruzioni} e \textbf{informazioni} necessarie al sistema per risolvere i problemi che gli vengono forniti.
+	\item \textit{firmware}: software integrato direttamente in un dispositivo, necessario per avviare il componente stesso e farlo interagire con altri componenti (es. scheda di rete))
+\end{itemize}
+Un \textit{programma} é una sequenza di istruzioni scritte in un linguaggio direttamente comprensibile da un computer.
+
+\subsection{Architettura a livelli}
+L'insieme delle istruzioni eseguite direttamente dall'hardware di un calcolatore é detto \textbf{linguaggio macchina}, é binario ed é detto $L_0$. Con linguaggio macchina si puó (erroneamente) indicare il linguaggio \textbf{assembly}, un linguaggio, sempre di basso livello (ad esempio si interagisce direttamente con i registri), costituito da un ristretto insieme di istruzioni (es. somma due numeri, invio di un segnale ecc.) piú comprensibili a un umano. L'assembly é detto linguaggio $L_1$ perché é il linguaggio immediatamente sopra a quello binario direttamente comprensibile al computer.\\
+Si puó estendere questo concetto dell'architettura a livelli arrivando a $n$ linguaggi: per far eseguire al computer le istruzioni in linguaggio $L_n$, é necessaria la presenza di un  \textit{traduttore} che traduce le istruzioni da $L_n$ a $L_0$ o direttamente (piú complesso), o passando per i livelli intermedi. Generalmente, piú un linguaggio é di alto livello, piú facilmente é comprensibile ad un umano.\\
+Il traduttore é detto:
+\begin{itemize}
+	\item \textbf{compilatore}: legge il programma in $L_i$ e produce un programma in un linguaggio inferiore. Se $L_i$ é $L_1$, il compilatore é detto \textbf{disassemblatore} (generalmente c'é una corrispondenza 1:1)
+	\item \textbf{interprete}: legge il programma in $L_i$, traducendo ed eseguendo di volta in volta le istruzioni in $L_0$
+\end{itemize}
+In generale, i calcolatori moderni si basano su architetture a piú livelli:\\
+\includegraphics[scale=0.5]{levels-architecture-computer.png}
+
+\begin{itemize}
+	\item applicativo: linguaggi di alto livello utilizzati dai programmatori (es. C, C++, Python)
+	\item sistema operativo: fornisce un'insieme di funzionalitá al livello applicativo (es. syscall, gestione della memoria)
+	\item ISA (Instruction Set Architecture): insieme di istruzioni (instruction set) di uno specifico processore
+	\item microarchitettura: interpretazione delle istruzioni ISA in microistruzioni (semplici istruzioni come fare la somma di due numeri)
+	\item logico-digitale: hardware del calcolatore e le sue componenti elementari
+\end{itemize}
+
+\subsubsection{Traduzione dei programmi C, C++}
+Generalmente, C e C++ vengono compilati (nulla vieta di utilizzare un interprete) e questo é generalmente il processo che porta da un file sorgente a un eseguibile:
+\begin{enumerate}
+	\item compilazione: i singoli file sorgenti sono compilati in file oggetto (estensione .obj o .o)
+	\item linking: vengono risolti i riferimenti dei singoli file
+\end{enumerate}
+A questo punto é disponibile un eseguibile, che, se invocato, viene caricato in memoria, i riferimenti vengono trasformati in indirizzi di memoria e il programma viene eseguito.
+
+\subsubsection{Macchine virtuali}
+La \textit{virtualizzazione} é un meccanismo che permette di astrarre un determinato componente di un sistema. Oggi, é utilizzata in diversi modi:
+\begin{itemize}
+	\item hardware: vengono virtualizzate le componenti fisiche di un computer, riuscendo ad esempio ad ospitare sistemi operativi diversi contemporaneamente, emulandoli
+	\item software: alcuni linguaggi, come Java, vengono compilati in un \textit{linguaggio macchina immaginario} (in questo caso chiamato bytecode). Il linguaggio intermedio viene interpretato da una macchina viruale (JVM=Java Virtual Machine), che traduce queste istruzioni nello specifiche istruzioni ISA. La macchina virtuale é un interprete, quindi generalmente piú lento di un compilatore, anche se utilizza tecniche di \textbf{compilazione just-in-time} (compila delle istruzioni a runtime, appena prima che vengano eseguite) e \textbf{caching} (non ritraduce codice giá tradotto)
+\end{itemize}
+
+\subsection{Rappresentazione digitale delle informazioni}
+
+\subsubsection{Precisione finita}
+I calcolatori moderni utilizzano segnali \textit{digitali} (lat. digitus, dito).\\
+A causa dela limitazione della quantitá di memoria, il calcolatore utilizza numeri a \textit{precisione finita}, ovvero rappresentati con un numero finito di cifre. A causa di questo, é possibile, in operazioni aritmetiche, ottenere errori: \textbf{underflow} (il risultato dell'operazione é minore del piú piccolo valore rappresentabile), \textbf{overflow} (il risultato dell'operazione é maggiore del piú grande valore rappresentabile) e \textbf{non appartenenza} (il risultato non é nè troppo grande, nè troppo piccolo ma non appartiene all'insieme dei valori rappresentabili). Per questo, non sempre valgono la proprietá associativa ($a+(b+c)=(a+b)+c$) e distributiva ($a(b+c)=ab+ac$).
+
+\subsubsection{Notazione posizionale base 2}
+Per rappresentare i numeri, si utilizza la notazione posizionale in \textbf{base 2}: $\displaystyle \sum_{i=-k}^{n} d_i \cdot 2^i$ ($-k$ per indicare anche i numeri decimali).\\
+Un \textit{byte} indica un insieme di 8 bit; sequenze piú lunghe di 1 byte sono dette \textit{word} (hanno lunghezza variabile). Il numero di configurazioni dato un numero $n$ di bit é $2^n$.
+
+\subsubsection{Conversioni}
+Le principali conversioni sono:
+\begin{itemize}
+	\item binario $\rightarrow$ decimale: si moltiplica la cifra $i$-esima per $2^i$ (es. $11010_2 = 1\cdot2^4 + 1\cdot2^3 + 1\cdot2^1 = 16+8+1 = 25_{10}$)
+	\item binario $\rightarrow$ ottale: si raggruppano, a partire dalla virgola, i bit in gruppi di 3 e si convertono in una cifra del sistema ottale (perché $8=2^3$)
+	\item binario $\rightarrow$ esadecimale: stessa cosa dell'ottale ma con gruppi di 4 cifre (perché $16=2^4$)
+\end{itemize}
+
+\subsubsection{Codifica dei numeri interi}
+I numeri interi vengono rappresentati con due principali metodi:
+\begin{itemize}
+	\item complemento a 2
+	\item eccesso $2^{m-1}$
+\end{itemize}
+Nel complemento a 2, dato un numero $n$, $-n$ é ottenibile invertendo ciascun bit di $n$ e aggiungendo 1. I numeri positivi hanno come primo bit 0, i negativi 1. Per ottenere il valore assoluto di un numero negativo, basta quindi applicare il complemento a 2.\\\\
+Nella codifica eccesso $2^{m-1}$, un numero $n$ é rappresentato da $n + 2^{m-1}$, dove $m$ é il numero di bit utilizzati per rappresentare $n$. É identico al complemento a 2 con il bit di segno invertito: i numeri da $-2^{m-1}$ a $+2^{m-1}-1$ sono mappati da $0$ a $2^{m}-1$ (es. con 8 bit, i numeri da -127 a 128 sono mappati da 0 a 255).\\\\
+Con entrambe queste codifiche si ha una sola rappresentazione per ciascun numero (compreso lo 0), oltre ai seguenti vantaggi:
+\begin{itemize}
+	\item possibilitá di utilizzare un \underline{unico circuito} sia per la somma che per la sottrazione, perchè $a-b=a+(-b)$
+	\item per verificare se é avvenuto un overflow/underflow, é sufficiente controllare che gli ultimi 2 bit del riporto siano \underline{diversi}
+\end{itemize}
+
+
+\end{document}
