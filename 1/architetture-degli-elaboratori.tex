@@ -90,5 +90,29 @@ Con entrambe queste codifiche si ha una sola rappresentazione per ciascun numero
 	\item per verificare se é avvenuto un overflow/underflow, é sufficiente controllare che gli ultimi 2 bit del riporto siano \underline{diversi}
 \end{itemize}
 
+\subsection{Mascheramento}
+Una \textbf{maschera} é una qualsiasi configurazione di un insieme di bit di lunghezza predefinita. Permettono di impostare dei bit a 1 (OR bitwise con una maschera che ha esclusivamente i bit da settare a 1) o 0 (AND bitwise con una maschera che ha esclusivamente i bit da settare a 0) e verificare se dei bit sono impostati a 1 o 0 (AND bitwise con i bit da controllare a 1: se il rimanente é = 0, i bit erano impostati a 1, altrimenti a 0).
+
+\subsection{Codifica dei numeri a virgola mobile}
+Per rappresentare dei numeri con la virgola, si utilizza un sistema detto \textbf{floating-point} (virgola mobile):
+$$n = f \times 10^e$$
+dove f é detta \textit{mantissa} e determina la \underline{precisione}, $e$ é detto \textit{esponente} e determina la gamma dei \underline{valori rappresentabili}.\\
+In questa notazione, esistono piú rappresentazioni per uno stesso numero, quindi si adotta la \textbf{codifica standard}, con $0.1 \le f < 1$.\\
+Per quanto la gamma dei valori rappresentabili sia molto ampia, si hanno sempre un numero finito di cifre, quindi un numero finito di valori rappresentabili: quando il risultato non appartiene all'insieme dei numeri rappresentabili si commette un errore di arrotondamento $E = min(|v-v_1|;|v-v_2|)$ dove $v$ é il valore reale e $v_1, v_2$ i valori rappresentabili piú vicini ad esso.\\
+L'errore assoluto aumenta all'aumentare del valore rappresentato, mentre l'errore relativo rimane costante.
+
+\subsection{IEEE 754}
+L'iEEE 754 é uno standard di codifica dei numeri in virgola mobile. I formati piú utilizzati sono:
+\begin{itemize}
+	\item \textbf{singola precisione}, 32 bit: 1 segno, 8 esponente, 23 mantissa
+	\item \textbf{doppia precisione}, 64 bit: 1 segno, 11 esponente, 52 mantissa
+\end{itemize}
+L'esponente é rappresentato in eccesso $2^{m-1}-1$ (ad esempio in singola precisione é in eccesso $2^{8-1}-1=2^7-1=128-1=127$), siccome una configurazione é riservata a $+\infty,-\infty \mbox{ e } NaN$ (not a number)\footnote{esiste una distinzione ulteriore tra SNaN (signaling NaN) e QNaN (quiet nan): il primo, se utilizzato in operazioni aritmetiche, genera (se opportunamente configurato) un'eccezione}.\\\\
+I numeri sono rappresentati in due forme:
+\begin{itemize}
+	\item forma \textbf{normalizzata}: nella mantissa binaria viene memorizzata solamente la parte decimale (\textit{fraction}); la mantissa viene implicitamente considerata 1,\textit{fraction}
+	\item forma \textbf{denormalizzata}: utilizzata per rappresentare valori inferiori al minimo valore normalmente rappresentabile nella forma normalizzata, presenta tutti i bit dell'esponente a 0 e considera implicitamente la mantissa come 0,\textit{fraction}
+\end{itemize}
+
 
 \end{document}

@@ -5,6 +5,9 @@
 \usepackage{amsfonts} % \mathbb
 % \usepackage{centernot}
 
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
 \title{
 	Appunti di Algoritmi e Strutture dati \\
 	\large A.A. 2022/2023
@@ -26,17 +29,33 @@ Lo \textbf{pseudocodice} é un \underline{linguaggio astratto ed informale}, int
 
 \subsection{Confronto di algoritmi}
 Nel confrontare gli algoritmi, ci si astrae da tutti gli aspetti dipendenti dall'implementazione. La risorsa principale su cui ci si basa é il \textbf{tempo di esecuzione}, quantificato non in secondo ma in \underline{accessi alla RAM}.\\
-L'algoritmo viene visto come una funzione $f(n)$ (dove $n$ é l'input fornito) di cui si considera solamente il termine dominante (solitamente si trascura anche il coefficiente). Per confrontare due algoritmi, si confrontano le due rispettive funzioni per $n \to \infty$.\\
-La crescita \textit{asintotica} delle funzioni viene descritta con la notazione $O$ grande (ordine di grandezza). L'\textbf{ordine di grandezza} é la piú piccola funzione maggiorante (siccome ne esistono infinite).\\\\
-Definizione. Siano $f : R \to R, g : R \to R$, diciamo che $f(x)$ é $O(g(x))$ se $\exists C, K : \forall x > K$ si ha $f(x) \le C \cdot g(x)$.\\\\
+L'algoritmo viene visto come una funzione $f(n)$ (dove $n$ é l'input fornito) di cui si considera solamente il termine dominante (solitamente si trascura anche il coefficiente). Per confrontare due algoritmi, si confrontano le due rispettive funzioni per $n \to \infty$.
+
+\subsubsection{Notazione O-grande}
+La crescita asintotica delle funzioni viene descritta con diverse notazioni, la cui maggiormente usata é la notazione $O$ grande (limite asintotico \textbf{superiore}), dove $O$ sta per ordine di grandezza. L'\textbf{ordine di grandezza} é la piú piccola funzione maggiorante (siccome ne esistono infinite).\\\\
+Definizione: siano $f : \mathbb{R} \to \mathbb{R}, g : \mathbb{R} \to \mathbb{R}$, $f(x) = O(g(x))$ se $\exists c, x_0 : \forall x > x_0$ si ha $f(x) \le c \cdot g(x)$.\\\\
 Esempi
 \begin{itemize}
-	\item Se si vuole dimostrare $f(x) = x^2+2x+1$ é $O(x^2) \rightarrow x^2+2x+1 \le x^2+2x^2+x^2 = 4x^2 \iff 3x^2-2x-1 \ge 0 \iff x \ge 1$ ($\frac{2 \pm \sqrt{16}}{6} \rightarrow \frac{2 + 4}{6} = 1$). Ho dimostrato che la definizione vale per $K=1, C=4$.
-	\item Per dimostrare invece che $f(n)=\frac{n(n+1)}{2}$ \underline{non é} $O(n) \rightarrow \frac{1}{2}(n^2+n) \le Cn \iff n^2+n \le 2Cn \iff n^2 \le n(2C-1) \iff n \le 2C-1$. Essendo $C$ costante, $\forall C \in R, \exists n \in R : n > 2C-1$, quindi $f(n)$ \underline{non é} $O(n)$.
+	\item Se si vuole dimostrare $f(x) = x^2+2x+1$ é $O(x^2) \rightarrow x^2+2x+1 \le x^2+2x^2+x^2 = 4x^2 \iff 3x^2-2x-1 \ge 0 \iff x \ge 1$ ($\frac{2 \pm \sqrt{16}}{6} \rightarrow \frac{2 + 4}{6} = 1$). Ho dimostrato che la definizione vale per $n_0=1, c=4$.
+	\item Per dimostrare invece che $f(n)=\frac{n(n+1)}{2}$ \underline{non é} $O(n) \rightarrow \frac{1}{2}(n^2+n) \le Cn \iff n^2+n \le 2cn \iff n^2 \le n(2c-1) \iff n \le 2C-1$. Essendo $c$ costante, $\forall c \in R, \exists n \in R : n > 2c-1$, quindi $f(n)$ \underline{non é} $O(n)$.
 \end{itemize}
-Alcuni ordini di grandezza ben noti in ordine crescente: \textbf{costante} ($O(1)$), \textbf{logaritmico} ($O(\log{n})$), \textbf{lineare} ($O(n)$), \textbf{log lineare} ($O(n \log{n})$), \textbf{polinomiale} ($O(n^k)$ con $k$ costante), \textbf{esponenziale} ($O(C^n)$ con $C$ costante).
+Alcuni ordini di grandezza ben noti in ordine crescente: \textbf{costante} ($O(1)$), \textbf{logaritmico} ($O(\log{n})$), \textbf{lineare} ($O(n)$), \textbf{log lineare} ($O(n \log{n})$), \textbf{polinomiale} ($O(n^k)$ con $k$ costante), \textbf{esponenziale} ($O(c^n)$ con $c$ costante).
 
-\subsubsection{Analisi dei casi}
+\subsubsection{Altre notazioni}
+Altre notazioni utilizzate nell'analisi asintotica sono $\Omega$ (Omega grande, limite asintotico \textbf{inferiore}) e $\Theta$ (Theta grande).\\\\
+Definizione di $\Omega$: siano $f : \mathbb{R} \to \mathbb{R}, g : \mathbb{R} \to \mathbb{R}, f(n) = \Omega(g(n))$ se $\exists c, n_0 : f(n) \ge c \cdot g(n)$ $\forall n \ge n_0$.\\
+É utilizzata nei limiti inferiori di complessitá e per l'analisi del tempo di esecuzione nel caso ottimo.\\\\
+Definizione di $\Theta$: siano $f : \mathbb{R} \to \mathbb{R}, g : \mathbb{R} \to \mathbb{R}, f(n) = \Theta(g(n))$ se $\exists c_1, c_2, n_0 : c_1 \cdot g(n) \le f(n) \le c_2 \cdot g(n)$ $\forall n \ge n_0$. Da notare che $f(n) = \Theta(g(n)) \iff f(n) = O(g(n)) \wedge \Omega(g(n))$.\\
+$O(fn))$ é spesso usato erroneamente al posto di $\Theta(f(n))$.\\\\
+Esistono degli analoghi di $O$ e $\Omega$ che sono $o$ ($o$ piccolo) e $\omega$ (omega piccolo), dove al posto della disuguaglianza ($\le$) si ha la disuguaglianza stretta ($<$).\\\\
+Equivalentemente:
+\begin{itemize}
+	\item[] se $\displaystyle \lim_{n \to \infty} \frac{f(n)}{g(n)} \to c$, allora $f(n) = \Theta(g(n))$
+	\item[] se $\displaystyle \lim_{n \to \infty} \frac{f(n)}{g(n)} \to 0$, allora $f(n) = o(g(n))$
+	\item[] se $\displaystyle \lim_{n \to \infty} \frac{f(n)}{g(n)} \to \infty$, allora $f(n) = \omega(g(n))$
+\end{itemize}
+
+\subsubsection{Caso ottimo, medio, pessimo}
 Nell'analisi degli algoritmi si possono analizzare 3 casi: caso ottimo (migliore possibile), medio e pessimo (peggiore possibile). Principalmente si analizza il caso pessimo e il caso medio, anche se l'analisi di quest'ultimo é spesso molto piú complicata delle altre due perché richiede un'analisi statistica.\\\\
 Esempio: Ricerca sequenziale.\\
 Problema: dato un array $v$ e un valore $x$, restituire l'indice della prima occorrenza di $x$ in $v$, o -1 se $x$ non é presente.\\
@@ -45,5 +64,45 @@ Problema: dato un array $v$ e un valore $x$, restituire l'indice della prima occ
 	\item Caso pessimo: l'elemento é in fondo o non é presente, quindi si itera su tutti gli elementi ($O(n)$)
 	\item Caso medio: per ipotesi, l'elemento é sempre presente e la probabilitá $p_i$ che l'elemento si trovi alla posizione $i$ sia la stessa per ogni $i$, quindi $p_i = \frac{1}{n}$. Se l'elemento é nella prima posizione, devo controllare una sola volta, nella seconda due volte, nella terza tre volte e cosí via fino a $n$: questo lo posso esprimere con la somma dei primi $n$ numeri, ovvero con la serie geometrica $\displaystyle \sum_{i=1}^{n} i = \frac{n(n+1)}{2}$. Moltiplico il tutto per la probabilitá $p_i$, che é la stessa per ogni elemento e ottengo $\displaystyle \frac{1}{n} \cdot \frac{n(n+1)}{2} = \frac{1}{2}(n+1)$, ovvero $O(n)$.
 \end{enumerate}
+
+\section{Analisi asintotica}
+Un algoritmo $A$ ha \textbf{costo di esecuzione} $O(f(n))$ rispetto ad una risorsa di calcolo, su instanze di ingresso di dimensione $n$ se la quantitá $r(n)$ di risorsa sufficiente per eseguire A su una \textbf{qualunque istanza di dimensione} $n$ verifica la relazione $r(n) = O(f(n))$.\\\\
+Dato lo pseudocodice, é possibile ottenere il costo di esecuzione analizzando la sua struttura. Ad esempio, data una serie di istruzioni, $t(\mbox{istruzione }1) + \dots + t(\mbox{istruzione }n)$, negli if-else $max(t(\mbox{ sequenza }1), t(\mbox{ sequenza }2))$, nei for e nei while bisogna vedere se il ciclo viene eseguito un numero di volte funzione di $n$ o meno.
+
+\subsection{Algoritmi ricorsivi}
+Negli algoritmi ricorsivi, il tempo di esecuzione dell'algoritmo puó essere descritto come la somma dei tempi di esecuzione di $f(n_1), \dots , f(n_k)$ con $n_i < n$, ovvero richiede di calcolare tutti i termini precedenti, fino al caso base.
+
+\subsubsection{Ricerca binaria}
+La ricerca binaria ha classe di complessitá $O(logn)$.\\
+Il tempo di esecuzione puú essere espresso come:
+\begin{equation}
+	\begin{cases}
+		c_1 \mbox{ se } n = 1 \mbox{ (caso base)} \\
+		T(\floor{\frac{n}{2} }) 
+		+ c_2 \mbox{ se } n > 1
+	\end{cases}
+\end{equation}
+É dimostrabile con diversi metodi, tra cui:
+\begin{enumerate}
+	\item Metodo iterativo. Partendo da $\displaystyle T(n)$, devo arrivare al caso base $T(1) = T(\frac{n}{n}$) dimezzando $n$ ad ogni passo. $T(n) = T(\frac{n}{2}) + c_2 = T(\frac{n}{4}) + 2c_2 = T(\frac{n}{8}) + 3c_2 = \dots$\\
+	Mi fermo quando $n = 2^k$, quindi dopo $k = log_2{n}$ chiamate ricorsive, per un totale di $ck$ chiamate ($c = c_1 + kc_2$). Quindi, $$T(n) = c \cdot log_2{n} = O(logn)$$
+	\item Dimostrazione per induzione. Prima di dimostrare, si "indovina" (grazie anche all'esperienza) la soluzione: $T(n) \le c \cdot log_2{n} (T(n) = O(logn))$.\\
+	Assumendo $T(n') \le c \cdot log_2{n'}$  $\forall n > n'$ (\textbf{ipotesi induttiva}), voglio dimostrare che $T(n) \le c \cdot log_2{n}$.\\\\
+	$\displaystyle T(n) = T(\frac{n}{2}) + 1 \mbox{ (costante qualsiasi)} \le c \cdot log_2(\frac{n}{2}) + 1 \mbox{ (ipotesi induttiva (} \frac{n}{2} \mbox{ é n'))} \\
+	= c \cdot log_2{n} - c \cdot log_2{2} \mbox{ (proprietá del logaritmo) } + 1 \\
+	= c \cdot log_2{n} - c \cdot 1 + 1$.\\
+	Se $c \ge 1$, allora $$c \cdot log_2{n} + c - 1 \le c \cdot log_2{n} \rightarrow T(n) \le c \cdot log_2{n}$$
+\end{enumerate}
+
+\section{Ordinamenti e grafi}
+
+\subsection{Grafo}
+Un grafo $G = (V,E)$ é composto da un insieme di \textit{vertici} $V$ e un insieme di \textit{archi} $E \subset V \times V$ (non $\subseteq$ perché non si ha un arco tra un vertice e se stesso) che connettono i vertici.\\
+In un grafo \textit{non orientato}, due vertici $u,v$ sono \textbf{adiacenti} se $\{u,v\} \in E$.\\
+In un grafo \textit{orientato}, se $(u,v) \in E \rightarrow v$ adiacente a $u$ e $(u,v)$ é \textbf{incidente} in $v$.\\
+Il \textit{grado} di un vertice é il numero di vertici adiacenti ad esso.\\
+Il \textit{cammino} é una sequenza di vertici $v_1, \dots, v_n$ tale che per ogni coppia di vertici consecutivi $v_i, v_{i+1}$, $v_{i+1}$ é adiacente a $v_i$. Un cammino é detto \textit{elementare} se non ci sono vertici ripetuti. Un \textit{ciclo} é un cammino elementare in cui il primo vertice coincide con l'ultimo (torna all'inizio).\\
+É detto \textit{grafo connesso} qualsiasi coppia di vertici unita da almeno un cammino.\\
+Un \textit{sottografo} é un sottoinsieme di vertici e archi di un grafo dato. Una \textit{componente connessa} é un sottografo connesso massimale (non si possono aggiungere altri vertici o archi )
 
 \end{document}
