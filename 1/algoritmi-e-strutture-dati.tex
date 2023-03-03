@@ -94,15 +94,36 @@ Il tempo di esecuzione puú essere espresso come:
 	Se $c \ge 1$, allora $$c \cdot log_2{n} + c - 1 \le c \cdot log_2{n} \rightarrow T(n) \le c \cdot log_2{n}$$
 \end{enumerate}
 
-\section{Ordinamenti e grafi}
+\section{Grafi}
+Un grafo $G = (V,E)$ é composto da un insieme di \textbf{vertici} $V$ e un insieme di \textbf{archi} $E \subset V \times V$ (non $\subseteq$ perché non si ha un arco tra un vertice e se stesso) che connettono i vertici.
 
-\subsection{Grafo}
-Un grafo $G = (V,E)$ é composto da un insieme di \textit{vertici} $V$ e un insieme di \textit{archi} $E \subset V \times V$ (non $\subseteq$ perché non si ha un arco tra un vertice e se stesso) che connettono i vertici.\\
-In un grafo \textit{non orientato}, due vertici $u,v$ sono \textbf{adiacenti} se $\{u,v\} \in E$.\\
-In un grafo \textit{orientato}, se $(u,v) \in E \rightarrow v$ adiacente a $u$ e $(u,v)$ é \textbf{incidente} in $v$.\\
-Il \textit{grado} di un vertice é il numero di vertici adiacenti ad esso.\\
-Il \textit{cammino} é una sequenza di vertici $v_1, \dots, v_n$ tale che per ogni coppia di vertici consecutivi $v_i, v_{i+1}$, $v_{i+1}$ é adiacente a $v_i$. Un cammino é detto \textit{elementare} se non ci sono vertici ripetuti. Un \textit{ciclo} é un cammino elementare in cui il primo vertice coincide con l'ultimo (torna all'inizio).\\
-É detto \textit{grafo connesso} qualsiasi coppia di vertici unita da almeno un cammino.\\
-Un \textit{sottografo} é un sottoinsieme di vertici e archi di un grafo dato. Una \textit{componente connessa} é un sottografo connesso massimale (non si possono aggiungere altri vertici o archi )
+\subsection{Terminologia}
+
+\subsubsection{Grafo orientato/non orientato}
+In un grafo \textbf{non orientato}, due vertici $u,v$ sono \textbf{adiacenti} se $\{u,v\} \in E$.\\
+In un grafo \textbf{orientato}, se $(u,v) \in E \rightarrow v$ adiacente a $u$ e $(u,v)$ é \textbf{incidente} in $v$.
+
+\subsubsection{Grado, cammino e ciclo}
+Il \textbf{grado} di un vertice é il numero di vertici adiacenti ad esso.\\
+Il \textbf{cammino} é una sequenza di vertici $v_1, \dots, v_n$ tale che per ogni coppia di vertici consecutivi $v_i, v_{i+1}$, $v_{i+1}$ é adiacente a $v_i$. Un cammino é detto \textbf{elementare} se non ci sono vertici ripetuti. Un \textbf{ciclo} é un cammino elementare in cui il primo vertice coincide con l'ultimo (torna all'inizio).
+
+\subsubsection{Grafo connesso, sottografo}
+É detto \textbf{grafo connesso} qualsiasi coppia di vertici unita da almeno un cammino.\\
+Un \textbf{sottografo} é un sottoinsieme di vertici e archi di un grafo dato. Una \textbf{componente connessa} é un sottografo connesso massimale.
+
+\subsubsection{Grafo completo}
+Un grafo é detto \textbf{completo} se ogni coppia di vertici é connessa da un arco. In questo caso, il numero di archi $m = \sum_{i=1}^{n-1}i = \frac{n(n-1)}{2}$ (ogni nodo é connesso a $n-1$ nodi ($n(n-1)$); infine divido per 2 siccome altrimenti sto considerando gli stessi archi 2 volte).
+
+\subsubsection{Grafo trasposto}
+Un grafo é $G^T = (V,E^T)$ é il \textbf{trasposto} di $G = (V,E)$ se $E^T = \{(u,v):(v,u) \in E\}$ (inverte il verso di percorrenza degli archi di $G$).
+
+\subsubsection{Grafo pesato}
+In un grafo pesato, agli archi viene associato un valore, detto \textbf{peso} (es. costo necessario per percorrerlo). Il peso é determinato da $p : V \times V \to \mathbb{R}$. Se non specificato, si assume il costo infinito.
+
+\subsection{Alberi}
+Un albero é un \textbf{grafo aciclico} (non é possibile compiere un ciclo al suo interno) con un numero di nodi uguale al numero di archi + 1. Puó esistere un nodo particolare chiamato \textbf{radice}, a partire dal quale é possibile raggiungere qualsiasi altro nodo.
+
+\subsubsection{Definizioni}
+
 
 \end{document}

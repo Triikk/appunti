@@ -4,6 +4,10 @@
 \usepackage{mathtools}
 \usepackage{amsfonts} % \mathbb
 % \usepackage{centernot}
+\usepackage{romannum}
+\newcommand{\rmnum}[1]{\romannumeral #1}
+\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
+
 
 \title{
 	Appunti di Algebra \\
@@ -59,7 +63,7 @@ Es. Possiamo scrivere, con la notazione dei campi finiti, il prodotto tra numeri
 Dato $Z_2$: $[0] \cdot [0] = [0], [0] \cdot [1] = [0 \cdot 1] = [0], [1] \cdot [1] = [1 \cdot 1] = [1]$. \\\\
 $Z_n$ é un campo $\iff n$ é \textbf{primo}. Se $n$ non é primo, non esisterá l'inverso di un fattore di $n$, ovvero non esisterá nessuna classe di elementi che se moltiplicata con la classe del fattore restituisca classe 1.
 
-\subsection{Spazi vettoriali}
+\section{Spazi vettoriali}
 Uno \textbf{spazio vettoriale} definito su un campo $K$ é un insieme $V$ con due operazioni:
 \begin{itemize}
 	\item[] $+ : V \times V \rightarrow V$ ($v_1, v_2) \rightarrow v_1 + v_2$
@@ -107,7 +111,7 @@ Altro esempio: $V = R[x], \langle x^2, x, 1 \rangle = \{ax^2+bx+c, a,b,c \in R\}
 Un insieme di vettori $\{v_1, \dots, v_n\}$ é \textbf{linearmente indipendente} se \textit{nessun vettore} é la combinazione lineare degli altri vettori dell'insieme, ovvero se l'\textit{unica combinazione lineare di} $v_1, \dots, v_n$ che restituisce il vettore nullo é quella con tutti i coefficienti $a_1, \dots, a_n \in K = 0$. Questo perché se un vettore é combinazione lineare di un insieme di vettori (es. $v_3 = 2v_1 + 4v_2$), basta dare i giusti coefficienti ($a_1=2, a_2=4, a3=-1)$ per fare in modo che si annullino e mettere i coefficienti degli altri vettori a 0.\\\\
 Un insieme di vettori é \textbf{linearmente dipendente} se non é linearmente indipendente. Non é peró detto che ogni vettore apparentenente a un insieme linearmente dipendente sia combinazione lineare di altri (es. $v_1 = (1,0), v_2 = (2,0), v_3 = (0,1) \rightarrow v_2=2v_1$ ma $v_3$ non é combinazione lineare di $v_1, v_2$), é sufficiente che una coppia di vettori sia ricavabile l'una dall'altra per rendere tutto l'insieme linearmente dipendente.
 
-\subsubsection{Equivalenza definizioni di indipendenza lineare}
+\subsubsection{Equivalenza delle definizioni di indipendenza lineare}
 \begin{enumerate}
 	\item Nessun vettore tra $v_1, \dots, v_n$ é combinazione lineare degli altri
 	\item Se $a_1v_1 + \dots + a_nv_n = 0 \implies a_1=0, \dots,a_n=0$
@@ -115,8 +119,93 @@ Un insieme di vettori é \textbf{linearmente dipendente} se non é linearmente i
 Se la 1 é falsa, $\exists v_i$ (supponiamo per semplicitá sia $v_1$) che é combinazione lineare degli altri, quindi $v_1 = a_2v_2 + \dots + a_nv_n \iff v_1 - a_2v_2 - \dots - a_nv_n = 0 \implies$ la 2 é anch'essa falsa perché i coefficienti non sono per forza tutti 0 (sicuramente $a_1=1$).\\
 Se la 2 é falsa significa che $\exists a_1, \dots, a_n$ con almeno un $a_i \ne 0 : a_1v_1 + \dots + a_nv_n = 0$, allora $\displaystyle v_i = \frac{a_1}{a_i}v_1 + \dots + \frac{a_n}{a_i}v_n \implies$ la 1 é anch'essa falsa siccome $v_i$ é combinazione lineare degli altri.
 
-\subsection{Base}
+\section{Base}
 Sia $V$ uno spazio vettoriale su $K$, $\{v_1, \dots, v_n\}$ é una \textbf{base} di $V$ se $\{v_1, \dots, v_n\}$ é \textbf{indipendente} e \textbf{genera V}.\\
 Ad esempio, per $V=R^2, \{(1,0),(0,1)\}$ é indipendente e genera $R^2$, quindi é una base, mentre $\{(1,0), (0,1), (1,1)\}$ genera $R^2$ ma é lineramente dipendente, quindi non é una base.
+
+\subsection{Teorema. Ogni vettore dello spazio vettoriale si scrive in modo univoco come combinazione lineare dei vettori di una base}
+Teorema. $B$ é una base di uno spazio vettoriale $V$ su un campo $K$ $\iff$ $\forall v \in V, \exists! a_1, \dots, a_n \in K : v = a_1v_1 + \dots a_nv_n$ (ogni vettore dello spazio si scrive in modo univoco come combinazione lineare degli altri).\\
+In questo caso, $a_1, \dots, a_n$ sono detti le \textbf{coordinate} di $v$ nella base $B$.\\\\
+Dimostrazione.
+\begin{itemize}
+	\item 1. $\implies$ 2\\
+Sia $B$ una base, $v \in V$. Poiché $B$ genera $V$ (per ipotesi é una base), $\exists a_1, \dots, a_n : v = a_1v_1 + \dots + a_nv_n$. Per mostrare l'unicitá dei coefficienti, supponiamo $\exists b_1, \dots, b_n : v= b_1v_1 + \dots + b_nv_n$.\\
+\begin{equation}
+	\begin{cases}
+		v = a_1v_1 + \dots + a_nv_n \\
+		v = b_1v_1 + \dots + b_nv_n
+	\end{cases}
+	\begin{cases}
+		v - v = (a_1v_1 + \dots + a_nv_n) - (b_1v_1 + \dots + b_nv_n) \\
+		0 = v_1 (a_1 - b_1)v_1 + \dots + (a_n - b_n)v_n
+	\end{cases}
+\end{equation}
+Poiché $B$ é linearmente indipendente $\implies a_1-b_1 = \dots = a_n - b_n = 0$, cioé $a_1 = b_1, \dots, a_n = b_n$
+	\item 2 $\implies$ 1\\
+Per ipotesi, $\forall v \in V, \exists! a_1, \dots, a_n \in K : v = a_1v_1 + \dots + a_nv_n$. Da questo, possiamo dedurre che $B$ genera $V$. Inoltre, sapendo che il vettore nullo é \underline{sempre} ottenibile come combinazione lineare in cui tutti i coefficienti $a_1, \dots, a_n \in K$ sono uguali a 0, sfruttando la loro unicitá, ció implica che $0v_1 + \dots + 0v_n = 0$, ovvero che $B$ é linearmente indipendente. $B$ genera $V$ ed é linearmente indipendente $\implies$ $B$ é una base.
+\end{itemize}
+
+\subsection{Base canonica}
+Sia $K^n$ spazio vettoriale di dimensione $n$ del campo $K$. Si definisce l'insieme di vettori $e_1 = (1,0,0, \dots, 0), e_2 = (0,1,0, \dots, 0), \dots, e_n = (0,0,0,\dots,1)$ \textbf{base canonica} di $K^n$.
+In generale, é un insieme di vettori $e_1, \dots, e_n$ dove l'$i$-esimo vettore ha la $i$-esima componente a 1 e tutte le altre a 0.\\
+Ad esempio, la base canonica di $R^3$ é $\{e_1 = (1,0,0), e_2 = (0,1,0), e_3 = (0,0,1)\}$.\\
+La base canonica per l'insieme dei polinomi di grado $\le k$ é $\{1, x, x^2, \dots, x^k\}$.
+
+\subsection{Estrazione e completamento a una base}
+Sia $X$ un insieme di vettori che \underline{genera $V$}: \textbf{estrarre} una base da $X$ significa trovare $B \subseteq X$ che sia una base di $V$.\\
+Ad esempio, $X = \{v_1 = (1,0), v_2 = (1,1), v_3 = (0,1)\}$, $B = \{v_1, v_3\}$ é una base estratta da $X$.\\\\
+Sia $X$ un insieme \underline{linearmente indipendente} in $V$: \textbf{completare} $X$ ad una base di $V$ significa trovare un insieme di vettori da aggiungere ad $X$ in modo da ottenere una base.\\
+Ad esempio, $X = \{v_1 = (1,0,0), v_2 = (2,0,0)\}$. $X$ non genera $R^3$ perché $\langle X \rangle = \{(x,y,z) \in R^3 : z = 0$. Per completare $X$ a una base di $R^3$ basta aggiungere un vettore linearmente indipendente dagli altri due e che abbia $z \ne 0$, ad esempio aggiungendo $v_3 = (0,0,1)$ si ottiene la base canonica.\\\\
+In generale: sia $V$ spazio vettoriale di dimensione $d$ su un campo $K$:
+\begin{itemize}
+	\item ogni insieme linearmente indipendente in $V$ contiene $k$ elementi, $k \le d$; puó essere completato a una base di $V$ aggiungendo $d-k$ elementi in modo opportuno (senza rendere l'insieme linearmente dipendente)
+	\item ogni insieme che genera $V$ contiene $g$ elementi, $g \ge d$; possiamo estrarre una base rimuovendo opportunamente $g - d$ elementi
+\end{itemize}
+
+\subsection{Teorema. Numero di elementi di una base}
+Teorema. Tutte le basi di uno spazio vettoriale $V$ su un campo $K$ hanno lo \textbf{stesso numero di elementi} e tale numero é detto la \textbf{dimensione} di $V$. La dimensione puó anche essere pensata come il numero di direzioni linearmente indipendenti sufficienti per potersi muovere in tutto lo spazio vettoriale.\\
+Ad esempio, $V = K^n$ ha base canonica $\{e_1, \dots, e_n\}$ composta da $n$ elementi, quindi \underline{qualunque base di $K^n$ ha $n$ elementi} ($dim(K^n) = n$).\\\\
+Ad esempio, $V = R[x] = \{\mbox{polinomi}\}$ ha una base $\{1,x,x^2,\dots\} \implies dim(R[x]) = \infty$, mentre $U_n = \{p(x) \in R[x] : p(x)$ ha grado $\le n\}$ é un sottospazio di $V$ che ha base $\{1,x,x^2,\dots,x^n\}$ con $n+1$ elementi, quindi $dim(U_n) = n+1$.
+
+\subsection{Forma cartesiana e parametrica}
+Sia $U$ sottospazio vettoriale di dimensione $d$ in uno spazio vettoriale di dimensione $n (d \le n)$. Posso esprimere $U$ in 2 forme:
+\begin{itemize}
+	\item forma \textbf{cartesiana}: $U$ é identificato in $K^n$ da $n - d$ equazioni tra loro linearmente indipendenti
+	\item forma \textbf{parametrica}: $U$ é espresso in funzione di $d$ parametri
+\end{itemize} 
+Ad esempio, $V = R^4, U = \{(x,y,z,w) \in R^4 : x = 2y, y = 3z, w = 0\} \mbox{ (forma cartesiana)}$, oppure $U = \{(6t,3t,t,0), t \in R\} \mbox{ (forma parametrica)}$. In questo caso, $U$ ha dimensione 1, siccome posso scegliere solamente 1 parametro: una volta scelto, gli altri ne derivano di conseguenza. Ogni equazione (linearmente indipendente), nella forma cartesisana, toglie 1 grado di libertá.\\\\
+
+\subsubsection{Cambio di forma}
+\begin{itemize}
+	\item da \textbf{cartesiana} a \textbf{parametrica}: si usano le equazioni per espliticare $n - d$ coordinate in funzione delle altre.\\
+	Ad esempio, dato $\{(x,y,z) \in R^3 : x + 2y - z = 0\}$, risolvo $z = x+2y$, quindi se $x=t,y=s \implies z=t+2s$, che in forma cartesiana diventa $\{(t,s,t+2s), t,s \in R\}$
+	\item da \textbf{parametrica} a \textbf{cartesiana}: si risolve il sistema.\\
+	Ad esempio, $\{(t,-2t,s,t+2s),t,s \in R$:
+	\begin{equation}
+		\begin{cases}
+			x = t \\
+			y = -2t \\
+			z = s \\
+			w = t+2s \\
+		\end{cases}
+		\begin{cases}
+			x = t \\
+			2x + y = 0 & \mbox{(2I + II)} \\
+			z = s \\
+			x + 2z - w = 0 & \mbox{(I + 2III - IV)} \\	
+		\end{cases}
+	\end{equation}
+	$ = \{(x,y,z,w) \in R^4 : 2x + y = 0 \wedge x + 2z - w = 0\}$
+\end{itemize}
+
+\subsection{Intersezione e unione di sottospazi vettoriali}
+Osservazione. La forma cartesiana facilita l'\underline{intersezione dei sottospazi vettoriali}, mentre la forma parametrica risulta piú comoda per \underline{trovare le basi} di uno spazio.\\
+Ad esempio, $U = \{(t,-2t,s,t+2s),t,s \in R\} = \{(t,-2t,0,t) + (0,0,s,2s),t,s \in R\} = \{t(1,-2,0,1) + s(0,0,1,2),t,s \in R\}$. $v_t = (1,-2,0,1), v_s = (0,0,1,2)$.\\
+$\{tv_t + sv_s,t,s \in R\} = \langle v_t, v_t \rangle \implies$ $v_t,v_s$ generano $U$ e sono linearmente indipendenti $\implies v_t, v_s$ sono una base di $U$.\\\\
+Proposizione. L'intersezione di sottospazi vettoriali é anch'esso un sottospazio vettoriale.\\
+Dimostrazione. Sia $V$ uno spazio vettoriale su un campo $K$ e siano $U,W$ sottospazi vettoriali di $V$. $U \cap W = \{v \in V : v \in U, v \in W\}$.\\
+Vogliamo mostrare che se $\forall v_1, v_2 \in U \cap W, v_1 + v_2 \in U \cap W$: in effetti, sapendo che $v_1, v_2 \in U, v_1, v_2 \in W$ e che $U$ e $W$ sono dei sottospazi, $v_1 + v_2 \in U, v_1 + v_2 \in W \implies v_1 + v_2 \in U \cap W$.\\\\
+Al contrario, l'unione di sottospazi non sempre é un sottospazio. Ad esempio, in $V = R^2$, $U = \{(x,y) \in R^2 : x = 0\} = \{(0,t), t \in R\}, W = \{(x,y) \in R^2 : y = 0\} = \{(x,y) \in R^2 : y = 0\} = \{s,0), s \in R\}$.\\
+$e_1 = (1,0) \in W, e_2 = (0,1) \in U \implies e_1, e_2 \in U \cup W$ ma $e_1 + e_2 = (1,1) \notin U, \notin W \implies e_1 + e_2 \notin U \cup W$.
 
 \end{document}
