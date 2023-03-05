@@ -4,6 +4,8 @@
 \usepackage{mathtools}
 \usepackage{amsfonts} % \mathbb
 % \usepackage{centernot}
+\usepackage{algpseudocode}
+% \usepackage{algorithmicx}
 
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
@@ -121,9 +123,55 @@ Un grafo é $G^T = (V,E^T)$ é il \textbf{trasposto} di $G = (V,E)$ se $E^T = \{
 In un grafo pesato, agli archi viene associato un valore, detto \textbf{peso} (es. costo necessario per percorrerlo). Il peso é determinato da $p : V \times V \to \mathbb{R}$. Se non specificato, si assume il costo infinito.
 
 \subsection{Alberi}
-Un albero é un \textbf{grafo aciclico} (non é possibile compiere un ciclo al suo interno) con un numero di nodi uguale al numero di archi + 1. Puó esistere un nodo particolare chiamato \textbf{radice}, a partire dal quale é possibile raggiungere qualsiasi altro nodo.
+Un albero é un \textbf{grafo aciclico} (non é possibile compiere un ciclo al suo interno) con un numero di nodi uguale al numero di archi + 1. Puó esistere un nodo particolare chiamato \textbf{radice}, a partire dal quale é possibile raggiungere qualsiasi altro nodo.\\\\
+A partire dalla radice, viene definita una \textit{relazione di ordinamento} fra i nodi, basata sulla distanza dalla radice, in cui ogni nodo puó avere un padre e dei figli. Inoltre, é detto \textbf{foglia} un nodo senza successori, mentre se presenta successori é detto \textbf{nodo interno}.\\
+Si definisce \textbf{profonditá} di un nodo la lunghezza del cammino dalla radice al nodo, \textbf{altezza} di un nodo la massima lunghezza di un cammino dal nodo a una foglia discendente dal nodo stesso, altezza dell'albero l'altezza della radice (massima lunghezza del cammino che collega la radice a qualsiasi nodo).\\
+Un \textbf{livello}/strato consiste di nodi con la stessa profonditá. Il numero di livelli é dato dall'altezza + 1 (radice).\\\\
+La rappresentazione grafica di un albero é detta \textbf{arborescenza}.
 
-\subsubsection{Definizioni}
+\section{Ordinamento}
+Input: sequenza di $n$ numeri $a_1, a_2, \dots, a_n$\\
+Output: i numeri ricevuti in input in ordine crescente: $a_{\pi(1)}, a_{\pi(2)}, \dots, a_{\pi(n)}$, dove $\pi$ é una permutazione degli indici.\\\\
+Esempio:\\
+$a = [7, 32, 88, 21, 92, -4]$\\
+$\pi = [6,1,4,2,3,5]$ (1-based)\\
+$a[\pi[]] = [-4,7,21,32,88,92]$\\\\
+Piú in generale, dato un array di $n$ elementi, ogni elemento é composto da una \textbf{chiave} (confrontabili tra loro) e un \textbf{valore}. Si vuole permutare l'array delle chiavi in modo che appaiano nell'ordine desiderato.
 
+\subsection{Definizioni}
+\begin{itemize}
+	\item ordinamento \textbf{in place}: l'algoritmo permuta gli elementi dell'array senza utilizzare un array di appoggio
+	\item ordinameno \textbf{stabile}: l'algoritmo preserva l'ordine in cui gli elementi con la stessa chiave appaiono nell'array originale
+\end{itemize}
+
+\subsection{Teorema del lower-bound per algoritmi comparison-sort}
+Qualsiasi algoritmo comparison-sort (basato su confronti di coppie di elementi) effettua, nel caso pessimo, $\Omega(n \cdot logn)$ (non puó fare meglio di così) confronti per ordinare una sequenza di $n$ numeri.\\\\
+
+\subsubsection{Dimostrazione}
+Alla base c'é l'idea che, dato un array di $n$ numeri, esistono $n!$ permutazioni, quindi $n!$ possibili ordinamenti, e ad ogni confronto si dimezzano le possibilitá rimaste.\\
+Il caso pessimo é dato dall'altezza dell'albero decisionale associato a questo algoritmo. Siccome l'albero decisionale in questo caso é un \textbf{albero binario} (albero in cui ogni nodo ha al massimo 2 figli), date $n!$ foglie, ha un'altezza $\Omega(nlogn)$, quindi nel caso pessimo vengono eseguiti $\Omega(nlogn)$ confronti.\\\\
+Dimostrazioni
+\begin{enumerate}
+	\item Siccome un albero binario alto $h$ ha massimo $2^h$ foglie, bisogna ottenere $\displaystyle 2^h \ge n!$. Usando la formula di Stirling: $n! > (\frac{n}{e})^n$ $\implies$ $$h \ge log{(\frac{n}{e})^n} = nlog(\frac{n}{e}) = nlogn -nloge = \Omega(nlogn)$$\\
+	Si noti che il passaggio da $log_2$ a $log_e$ é semplicemente dato dalla moltiplicazione per una costante
+	\item Bisogna ottenere $2^h \ge n! \implies h \ge log(n!)$. Siccome ho $\ge$, se sostituisco a $log(n!)$ qualcosa di piú piccolo, la disuguaglianza resta sempre vera, quindi: $$\displaystyle log(n!) = log(1 \cdot 2 \cdot \dots \cdot \frac{n}{2} \cdot (\frac{n}{2}+1) \cdot \dots \cdot n) \ge log(1 \cdot 1 \cdot \dots \cdot \frac{n}{2} \cdot \dots \cdot \frac{n}{2}) = log(\frac{n}{2})^{\frac{n}{2}} = \frac{n}{2}log(\frac{n}{2}) = \Omega(nlogn)$$\\
+	(sostituisco tutti i termini da 1 a $\frac{n}{2}$ con 1 e da $\frac{n}{2}$ a $n$ con $\frac{n}{2}$).
+\end{enumerate}
+
+\subsection{Insertion sort}
+In questo algoritmo, si parte disponendo gli elementi ordinati nella parte sinistra dell'array, si prende un elemento dalla parte non ordinata e lo si inserisce in maniera ordinata.
+
+\subsubsection{Pseudocodice}
+\begin{algorithmic}
+\For{$j = 2$ to size($A$)}
+	\State $key$ = $A[j]$
+	\State $i = j - 1$	
+	\While{$i > 0$ and $A[i] > key$} \Comment{fino a quando il numero é piú grande}
+ 		\State $A[i+1]$ = $A[i]$ \Comment{shifto a destra di 1}
+		\State $i = i - 1$
+	\EndWhile
+	\State $A[i+1]$ = $key$
+\EndFor
+\end{algorithmic}
 
 \end{document}
