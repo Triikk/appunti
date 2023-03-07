@@ -6,6 +6,9 @@
 % \usepackage{centernot}
 \usepackage{algpseudocode}
 % \usepackage{algorithmicx}
+\usepackage{verbatim}
+
+\graphicspath{ {./images/algoritmi-e-strutture-dati/} }
 
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
@@ -164,14 +167,84 @@ In questo algoritmo, si parte disponendo gli elementi ordinati nella parte sinis
 \subsubsection{Pseudocodice}
 \begin{algorithmic}
 \For{$j = 2$ to size($A$)}
-	\State $key$ = $A[j]$
-	\State $i = j - 1$	
+	\State $key \gets A[j]$
+	\State $i \gets j - 1$	
 	\While{$i > 0$ and $A[i] > key$} \Comment{fino a quando il numero é piú grande}
- 		\State $A[i+1]$ = $A[i]$ \Comment{shifto a destra di 1}
-		\State $i = i - 1$
+ 		\State $A[i+1] \gets A[i]$ \Comment{shifto a destra di 1}
+		\State $i \gets i - 1$
 	\EndWhile
-	\State $A[i+1]$ = $key$
+	\State $A[i+1] \gets key$
 \EndFor
 \end{algorithmic}
+
+\subsection{Merge sort}
+Il merge sort é un algoritmo di ordinamento che si basa sul metodo \textbf{divide et impera}, che consiste nel dividere un problema in sottoproblemi, risolverli e combinare le soluzioni dei sottoproblemi per ottenere la soluzione del problema complesso.\\\\
+Dato un vettore $S$, l'algoritmo consiste nel:
+\begin{enumerate}
+	\item dividere $S$ nei vettori $S_1$ e $S_2$, ognuno con la metá degli elementi di $S$ fino a quando $S$ ha almeno 2 elementi
+	\item ordinare gli elementi in $S_1$ e $S_2$ (merge)
+	\item mettere insieme gli elementi di $S_1$ e $S_2$
+\end{enumerate}
+Si parte ordinando 2 vettori da 1 elemento, poi 2 vettori da 2 elementi e cosí via fino ad ordinare i due sottovettori iniziali $S_1$ e $S_2$.\\\\
+Il merge é la parte che si occupa di ordinare i sottovettori. Ad ogni ordinamento di 2 vettori di $n$ e $m$ elementi, alloca un vettore di $n+m$ elementi (non in-place). L'ordinamento viene fatto inserendo ogni volta nel vettore allocato il minore degli \textbf{affioranti} (elementi piú a sinistra di ogni vettore, ovvero i piú piccoli).
+
+\subsubsection{Pseudocodice}
+Versione ricorsiva non in-place:
+\begin{algorithmic}
+\Function{mergeSort}{A,p,r}
+\If{$p < r$}
+	\State $q \gets (p+r)/2$
+	\State \Call{mergeSort}{A,p,q} \Comment{ordino la metá di sinistra}
+	\State \Call{mergeSort}{A,q+1,r} \Comment{ordino la metá di destra}
+	\State \Call{merge}{A,p,q,r}
+\EndIf
+\EndFunction
+\end{algorithmic}
+
+\subsubsection{Esempio}
+\includegraphics[scale=0.4]{merge-sort.png}
+
+\subsubsection{Complessitá}
+La complessitá del merge sort non dipende dalla configurazione iniziale. L'algoritmo fa lo stesso procedimento ogni volta, quindi non esiste un caso pessimo, medio o ottimo:\\
+$$T(n) = 2T(\frac{n}{2}) + \Theta(n) = \Theta(nlogn)$$
+
+\subsection{Quick sort}
+Il quick sort é un altro algoritmo di ordinamento sempre basato sulla tecnica divide et impera.\\
+Consiste nel dividere l'array in 2 parti non vuote basandosi su un elemento detto \textbf{pivot} (selezionato arbitrariamente (es. il primo) o casualmente (minimizza le possibilitá di avere il caso pessimo)), spostando tutti gli elementi piú piccoli del pivot a sinistra e quelli piú grandi a destra. Il procedimento viene iterato fino a quando tutti i gruppi non sono ordinati.\\\\
+Il lavoro principale é svolto dalla funzione che si occupa di partizionare:
+\begin{itemize}
+	\item partendo dall'inizio del vettore, ci si sposta verso il fondo (destra) fino a quando non si trova un elemento piú grande ($\ge o >$ arbitrariamente, a patto che dopo si usi la sua negazione (es. $\ge$ e $<$)) del pivot, utilizzando un indice $i$
+	\item partendo dal fonto del vettore, ci si sposta verso l'inizio (sinistra) fino a quando non si trova un elemento piú piccolo del pivot, utilizzando un indice $j$
+	\item si scambiano gli elementi e si continua il procedimento dalla stessa posizione fino a quando non si ottiene $i > j$ (gli elementi sono posizionati correttamente)
+\end{itemize}
+Una volta ordinati gli elementi di un sottogruppo, la funzione che partiziona ritorna un indice $q$ tale che gli elementi fino a posizione $q$ sono piú piccoli del pivot, mentre quelli da $q+1$ in poi sono piú grandi.
+
+\subsubsection{Pseudocodice}
+Versione ricorsiva:
+\begin{algorithmic}
+\Function{quickSort}{A,p,r}
+\If{$p < r$}
+	\State $q \gets partition(A,p,q)$ \Comment{sceglie il pivot e sposta gli elementi}
+	\State \Call{quickSort}{A,p,q} \Comment{ordino la metá di sinistra}
+	\State \Call{quickSort}{A,q+1,r} \Comment{ordino la metá di destra}
+\EndIf
+\EndFunction
+\end{algorithmic}
+Dallo pseudocodice si puó notare una differenza rispetto al merge sort: il merge sort prima divide i vettori in sottogruppi, poi li riordina, mentre il quick sort prima sposta gli elementi (a destra o sinistra del pivot), poi itera ricorsivamente per ordinarli.
+
+\subsubsection{Esempio}
+\includegraphics{quick-sort-example.png}
+
+\subsubsection{Complessitá}
+Nel caso ottimo, il pivot ha esattamente metá degli elementi maggiori e metá minori. L'algoritmo é analogo al merge sort, quindi $$T(n) = 2T(\frac{n}{2}) + \Theta(n) = \Theta(nlogn)$$
+Nel caso pessimo, l'array é (paradossalmente) giá ordinato. Ogni elemento ha tutti gli elementi a destra maggiori: ad ogni ciclo si decrementa $j$ (ci si sposta dal fondo verso l'inizio) fino a raggiungere $i$, siccome il primo elemento di ogni ciclo é giá nella posizione corretta. $$T(n) = T(n-1) + \Theta(n) = \Theta(n^2)$$
+Nel caso medio, considerando il caso in cui il pivot abbia $\frac{1}{10}$ degli elementi piú piccoli e $\frac{9}{10}$ piú grandi, si puó costruire un albero di decisione (qui considera il caso di $\frac{1}{4}$ e $\frac{3}{4}$ ma sono analoghi):
+
+\begin{figure}
+\includegraphics[scale=0.5]{quick-sort.png}
+\caption{Fonte: Khan Academy}
+\end{figure}
+
+Fino a quando ci sono tutti i rami, si paga $log_{10}n$ volte $n$ ($\frac{1}{10}n+\frac{9}{10}n, \frac{1}{100}n+\frac{9}{100}n+\frac{9}{100}n+\frac{81}{100}n, \dots$); una volta che una parte dei rami termina, si paga $\displaystyle log_{\frac{10}{9}}n$ volte una quantitá $< n$, quindi la complessitá totale é $\Theta(nlogn)$.
 
 \end{document}
