@@ -58,17 +58,17 @@ La \textit{virtualizzazione} é un meccanismo che permette di astrarre un determ
 	\item software: alcuni linguaggi, come Java, vengono compilati in un \textit{linguaggio macchina immaginario} (in questo caso chiamato bytecode). Il linguaggio intermedio viene interpretato da una macchina viruale (JVM=Java Virtual Machine), che traduce queste istruzioni nello specifiche istruzioni ISA. La macchina virtuale é un interprete, quindi generalmente piú lento di un compilatore, anche se utilizza tecniche di \textbf{compilazione just-in-time} (compila delle istruzioni a runtime, appena prima che vengano eseguite) e \textbf{caching} (non ritraduce codice giá tradotto)
 \end{itemize}
 
-\subsection{Rappresentazione digitale delle informazioni}
+\section{Rappresentazione digitale delle informazioni}
 
-\subsubsection{Precisione finita}
+\subsection{Precisione finita}
 I calcolatori moderni utilizzano segnali \textit{digitali} (lat. digitus, dito).\\
 A causa dela limitazione della quantitá di memoria, il calcolatore utilizza numeri a \textit{precisione finita}, ovvero rappresentati con un numero finito di cifre. A causa di questo, é possibile, in operazioni aritmetiche, ottenere errori: \textbf{underflow} (il risultato dell'operazione é minore del piú piccolo valore rappresentabile), \textbf{overflow} (il risultato dell'operazione é maggiore del piú grande valore rappresentabile) e \textbf{non appartenenza} (il risultato non é nè troppo grande, nè troppo piccolo ma non appartiene all'insieme dei valori rappresentabili). Per questo, non sempre valgono la proprietá associativa ($a+(b+c)=(a+b)+c$) e distributiva ($a(b+c)=ab+ac$).
 
-\subsubsection{Notazione posizionale base 2}
+\subsection{Notazione posizionale base 2}
 Per rappresentare i numeri, si utilizza la notazione posizionale in \textbf{base 2}: $\displaystyle \sum_{i=-k}^{n} d_i \cdot 2^i$ ($-k$ per indicare anche i numeri decimali).\\
 Un \textit{byte} indica un insieme di 8 bit; sequenze piú lunghe di 1 byte sono dette \textit{word} (hanno lunghezza variabile). Il numero di configurazioni dato un numero $n$ di bit é $2^n$.
 
-\subsubsection{Conversioni}
+\subsection{Conversioni}
 Le principali conversioni sono:
 \begin{itemize}
 	\item binario $\rightarrow$ decimale: si moltiplica la cifra $i$-esima per $2^i$ (es. $11010_2 = 1\cdot2^4 + 1\cdot2^3 + 1\cdot2^1 = 16+8+1 = 25_{10}$)
@@ -76,7 +76,7 @@ Le principali conversioni sono:
 	\item binario $\rightarrow$ esadecimale: stessa cosa dell'ottale ma con gruppi di 4 cifre (perché $16=2^4$)
 \end{itemize}
 
-\subsubsection{Codifica dei numeri interi}
+\subsection{Codifica dei numeri interi}
 I numeri interi vengono rappresentati con due principali metodi:
 \begin{itemize}
 	\item complemento a 2
@@ -91,7 +91,7 @@ Con entrambe queste codifiche si ha una sola rappresentazione per ciascun numero
 \end{itemize}
 
 \subsection{Mascheramento}
-Una \textbf{maschera} é una qualsiasi configurazione di un insieme di bit di lunghezza predefinita. Permettono di impostare dei bit a 1 (OR bitwise con una maschera che ha esclusivamente i bit da settare a 1) o 0 (AND bitwise con una maschera che ha esclusivamente i bit da settare a 0) e verificare se dei bit sono impostati a 1 o 0 (AND bitwise con i bit da controllare a 1: se il rimanente é = 0, i bit erano impostati a 1, altrimenti a 0).
+Una \textbf{maschera} é una qualsiasi configurazione di un insieme di bit di lunghezza predefinita. Il mascheramento consiste nell'utilizzo delle maschere e di operazioni bitwise per compiere determinate operazioni. Le operazioni piú comuni sono impostare dei bit a 1 (OR bitwise con una maschera che ha esclusivamente i bit da settare a 1) o 0 (AND bitwise con una maschera che ha esclusivamente i bit da settare a 0) e uverificare se dei bit sono impostati a 1 o 0 (AND bitwise con i bit da controllare a 1: se il rimanente é = 0, i bit erano impostati a 1, altrimenti a 0).
 
 \subsection{Codifica dei numeri a virgola mobile}
 Per rappresentare dei numeri con la virgola, si utilizza un sistema detto \textbf{floating-point} (virgola mobile):
@@ -114,5 +114,40 @@ I numeri sono rappresentati in due forme:
 	\item forma \textbf{denormalizzata}: utilizzata per rappresentare valori inferiori al minimo valore normalmente rappresentabile nella forma normalizzata, presenta tutti i bit dell'esponente a 0 e considera implicitamente la mantissa come 0,\textit{fraction}
 \end{itemize}
 
+\section{Architettura del calcolatore}
+L'architettura di un calcolatore é il modo in cui sono organizzati e collegati i suoi componenti.
+
+\subsection{Architettura di Von Neumann}
+L'architettura piú utilizzata é la architettura di Von Neumann, basata sul fatto che anche le istruzioni dei \textbf{programmi}, oltre ai \textbf{dati}, sono salvati in memoria.\\
+La CPU utilizza i \textbf{bus}, interconnessioni elettriche che permettono il trasferimento di informazioni, per gestirli. I due bus piú comuni sono il \textbf{bus dati} e il \textbf{bus indirizzi}. Esiste anche il \textbf{bus controlli} che serve per coordinare le attivitá del sistema e comunicare con i dispositivi inviando segnali.
+
+\subsection{CPU}
+La CPU si occupa di leggere le istruzioni dei programmi immagazzinati in memoria ed eseguirle. É composta da:
+\begin{itemize}
+	\item \textbf{unitá di controllo} (CU, control unit): legge le istruzioni in memoria centrale e ne identifica la tipologia
+	\item \textbf{ALU} (arithmetic logic unit): esegue le operazioni aritmetico-logiche (es. somma, operazioni bitwise)
+	\item \textbf{registri}: piccole aree di memoria ad alta velocitá utilizzate per memorizzare risultati temporanei di istruzioni e informazioni di controllo (es. flag)
+\end{itemize}
+
+\subsubsection{Registri}
+Normalmente i registri hanno tutti la stessa dimensione. Inoltre, esistono dei registri general-purpose e altri che hanno uno scopo specifico, tra cui:
+\begin{itemize}
+	\item \textbf{program counter} (PC): contiene l'indirizzo della prossima istruzione da eseguire
+	\item \textbf{instruction register} (IR): contiene l'indirizzo dell'istruzione corrente
+\end{itemize}
+
+\subsubsection{Ciclo di fetch-execute}
+Per eseguire un'istruzione, la CPU compie il cosiddetto ciclo di \textbf{fetch-execute}:
+\begin{enumerate}
+	\item il valore del PC viene messo in \textbf{MAR} (memory address register) e ci si prepara alla lettura
+	\item si accede all'indirizzo di memoria specificato in MAR e si scrive il valore letto su \textbf{MDR} (memory data register)
+	\item il valore di MDR viene copiato in IR e l'istruzione viene decodificata
+	\item l'istruzione viene passata all'ALU. In caso siano necessari degli operandi in ingresso, devono essere reperiti seguendo il processo di prima (indirizzo del primo operando su MAR, accesso in memoria e scrittura su MDR; stessa cosa per un eventuale secondo)
+	\item il risultato dell'operazione viene salvato nel registro. In caso sia necessario salvare in memoria il risultato, si carica l'indirizzo di destinazione in MAR, si carica il risultato in MDR, si accede in memoria e si scrive il valore
+	\item si aggiorna il program counter e si ricomincia
+\end{enumerate}
+
+\subsubsection{Ciclo di data path}
+Con ciclo di \textbf{data path} si intende il passaggio di 2 operandi attraverso la ALU e la memorizzazione del risultato in un nuovo registro. Ogni istruzione assembly viene eseguita in uno o piú cicli di data path (es. divisione). In architetture non parallele, questo ciclo viene eseguito ogni ciclo di \textbf{clock}.
 
 \end{document}
