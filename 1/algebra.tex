@@ -293,14 +293,14 @@ Infine, unendo i pezzi, ottengo $dim(V) = n = dim(\Ker{f}) + dim(\Ima{f}) = k + 
 \begin{enumerate}
 	\item se $dim(V) > dim(U)$, allora $f$ \textbf{non puó essere iniettiva}
 	\item se $dim(V) < dim(U)$, allora $f$ \textbf{non puó essere suriettiva}
-	\item se $dim(V) = dim(U)$, allora $f$ \textbf{é biunivoca}
+	\item se $dim(V) = dim(U)$, allora $f$ iniettiva $\iff$ $f$ suriettiva 
 \end{enumerate}
 
 \subsubsection{Dimostrazione}
 \begin{enumerate}
 	\item $dim(\Ima{f}) \le dim(U) < dim(V) \underbrace{=}_{\mbox{teorema del rango}} dim(\Ima{f}) + dim(\Ker{f}) \iff dim(\Ima{f}) < dim(\Ima{f}) + dim(\Ker{f}) \iff dim(\Ker{f})> 0 \implies \Ker{f} \ne \{\vec{0}\}$ ($f$ non é iniettiva)
 	\item $dim(\Ima{f}) + dim(\Ker{f}) < dim(U) \implies dim(\Ima{f}) \ne dim(U)$ ($dim(\Ker{f}) \ge 0$), quindi $f$ non é suriettiva perché non é $=U$
-	\item $dim(\Ker{f}) + dim(\Ima{f}) = dim(V) = dim(U)$ ma $dim(\Ima{f}) \le dim(U) \implies dim(\Ima{f}) = dim(U) \wedge dim(\Ker{f}) = 0$
+	\item $dim(\Ker{f}) + dim(\Ima{f}) = dim(V) = dim(U)$. Se $f$ é iniettiva, $dim(\Ker{f}) = 0 \iff dim(\Ima{f}) = dim(U)$, ovvero $f$ é suriettiva
 \end{enumerate}
 
 \end{document}
