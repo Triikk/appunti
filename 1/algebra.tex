@@ -4,10 +4,9 @@
 \usepackage{mathtools}
 \usepackage{amsfonts} % \mathbb
 % \usepackage{centernot}
-\usepackage{romannum}
-\newcommand{\rmnum}[1]{\romannumeral #1}
-\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
 
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Ima}{Im}
 
 \title{
 	Appunti di Algebra \\
@@ -108,7 +107,7 @@ $. Il sottospazio generato da $v_1, v_2$ é $\langle v_1, v_2 \rangle = \{a_1 v_
 Altro esempio: $V = R[x], \langle x^2, x, 1 \rangle = \{ax^2+bx+c, a,b,c \in R\} = \{$ tutti i polinomi di grado $\leq 2\}$ (con $a=0$ il grado é $< 2$).
 
 \subsection{Indipendenza lineare}
-Un insieme di vettori $\{v_1, \dots, v_n\}$ é \textbf{linearmente indipendente} se \textit{nessun vettore} é la combinazione lineare degli altri vettori dell'insieme, ovvero se l'\textit{unica combinazione lineare di} $v_1, \dots, v_n$ che restituisce il vettore nullo é quella con tutti i coefficienti $a_1, \dots, a_n \in K = 0$. Questo perché se un vettore é combinazione lineare di un insieme di vettori (es. $v_3 = 2v_1 + 4v_2$), basta dare i giusti coefficienti ($a_1=2, a_2=4, a3=-1)$ per fare in modo che si annullino e mettere i coefficienti degli altri vettori a 0.\\\\
+Un insieme di vettori $\{v_1, \dots, v_n\}$ é \textbf{linearmente indipendente} se \textit{nessun vettore} é la combinazione lineare degli altri vettori dell'insieme, ovvero se l'\textit{unica combinazione lineare di} $v_1, \dots, v_n$ che restituisce il vettore nullo é quella con tutti i coefficienti $a_1, \dots, a_n \in K = \vec{0}$. Questo perché se un vettore é combinazione lineare di un insieme di vettori (es. $v_3 = 2v_1 + 4v_2$), basta dare i giusti coefficienti ($a_1=2, a_2=4, a3=-1)$ per fare in modo che si annullino e mettere i coefficienti degli altri vettori a 0.\\\\
 Un insieme di vettori é \textbf{linearmente dipendente} se non é linearmente indipendente. Non é peró detto che ogni vettore apparentenente a un insieme linearmente dipendente sia combinazione lineare di altri (es. $v_1 = (1,0), v_2 = (2,0), v_3 = (0,1) \rightarrow v_2=2v_1$ ma $v_3$ non é combinazione lineare di $v_1, v_2$), é sufficiente che una coppia di vettori sia ricavabile l'una dall'altra per rendere tutto l'insieme linearmente dipendente.
 
 \subsubsection{Equivalenza delle definizioni di indipendenza lineare}
@@ -142,7 +141,7 @@ Sia $B$ una base, $v \in V$. Poiché $B$ genera $V$ (per ipotesi é una base), $
 \end{equation}
 Poiché $B$ é linearmente indipendente $\implies a_1-b_1 = \dots = a_n - b_n = 0$, cioé $a_1 = b_1, \dots, a_n = b_n$
 	\item 2 $\implies$ 1\\
-Per ipotesi, $\forall v \in V, \exists! a_1, \dots, a_n \in K : v = a_1v_1 + \dots + a_nv_n$. Da questo, possiamo dedurre che $B$ genera $V$. Inoltre, sapendo che il vettore nullo é \underline{sempre} ottenibile come combinazione lineare in cui tutti i coefficienti $a_1, \dots, a_n \in K$ sono uguali a 0, sfruttando la loro unicitá, ció implica che $0v_1 + \dots + 0v_n = 0$, ovvero che $B$ é linearmente indipendente. $B$ genera $V$ ed é linearmente indipendente $\implies$ $B$ é una base.
+Per ipotesi, $\forall v \in V, \exists! a_1, \dots, a_n \in K : v = a_1v_1 + \dots + a_nv_n$. Da questo, possiamo dedurre che $B$ genera $V$. Inoltre, sapendo che il vettore nullo é \underline{sempre} ottenibile come combinazione lineare in cui tutti i coefficienti $a_1, \dots, a_n \in K$ sono uguali a 0, sfruttando la loro unicitá, ció implica che $0v_1 + \dots + 0v_n = \vec{0}$, ovvero che $B$ é linearmente indipendente. $B$ genera $V$ ed é linearmente indipendente $\implies$ $B$ é una base.
 \end{itemize}
 
 \subsection{Base canonica}
@@ -207,5 +206,101 @@ Dimostrazione. Sia $V$ uno spazio vettoriale su un campo $K$ e siano $U,W$ sotto
 Vogliamo mostrare che se $\forall v_1, v_2 \in U \cap W, v_1 + v_2 \in U \cap W$: in effetti, sapendo che $v_1, v_2 \in U, v_1, v_2 \in W$ e che $U$ e $W$ sono dei sottospazi, $v_1 + v_2 \in U, v_1 + v_2 \in W \implies v_1 + v_2 \in U \cap W$.\\\\
 Al contrario, l'unione di sottospazi non sempre é un sottospazio. Ad esempio, in $V = R^2$, $U = \{(x,y) \in R^2 : x = 0\} = \{(0,t), t \in R\}, W = \{(x,y) \in R^2 : y = 0\} = \{(x,y) \in R^2 : y = 0\} = \{s,0), s \in R\}$.\\
 $e_1 = (1,0) \in W, e_2 = (0,1) \in U \implies e_1, e_2 \in U \cup W$ ma $e_1 + e_2 = (1,1) \notin U, \notin W \implies e_1 + e_2 \notin U \cup W$.
+
+\section{Somma di sottospazi}
+Dato uno spazio vettoriale $V$ su un campo $K$, dati due sottospazi vettoriali $U$, $W$, la \textbf{somma} dei sottospazi $U$ e $W$ é il sottospazio $$U + W = \{u+w, u \in U, w \in W\}$$
+$U + W$ é un sottospazio di $V$ perché $(u+w) + (u\prime + w\prime) = \underbrace{u + u\prime}_{\in U} + \underbrace{w + w\prime}_{\in W}$ ($\in U + W$). Analogamente, $\forall a \in K, a(u+w) = \underbrace{au}_{\in U} + \underbrace{aw}_{\in W}$ ($\in U + W$).
+
+\subsection{Formula di Grassman}
+Siano $U$, $W$ sottospazi vettoriali di $V$:
+$$dim(U + W) = dim(U) + dim(W) - dim(U \cap W)$$
+Intuitivamente, questa formula ricorda il modo di contare gli elementi appartenenti a due insiemi $A$ e $B$: elementi in $A$ + elementi in $B$ - elementi in $A \cap B$ siccome li ho giá contati negli elementi di $A$.\\\\
+Idea alla base della dimostrazione:\\
+Scelgo una base $v_1, \dots, v_k$ di $U \cap W$ ($dim(U \cap W) = k$) e la completo a una base $v_1, \dots, v_k ,u_1, \dots, u_m$ di $U$ ($dim(U) = k + m$) e a una base $v_1, \dots, v_k ,w_1, \dots, w_l$ di $W$ ($dim(W) = k + l$).\\
+Si puó dimostrare che $v_1, \dots, v_k, u_1, \dots, u_m, w_1, \dots, w_l$ é una base di $U + W$, quindi $dim(U + W) = k + l + m = dim(U) + dim(W) - dim(U \cap W) = (k + l) + (k + m) - k$.
+
+\subsection{Somma diretta}
+Sia $U$, $W$ sottospazi vettoriali di $V$, allora $U$ e $W$ formano \textbf{somma diretta} se $U \cap W = \{\vec{0}\}$. Scriviamo $U \oplus W$ al posto di $U + W$.
+
+\subsubsection{Implicazioni}
+Sia $V$ spazio vettoriale, siano $U$, $W$ sottospazi vettoriali di $V$ tali che $V = U \oplus W$, allora $$\forall v \in V, \exists! u \in U, w \in W : v = u + w$$
+ovvero ogni vettore $v$ di $V$ si scrive in modo unico come somma di un vettore $u \in U$ e $w \in W$.\\\\
+Dimostrazione. Sappiamo che:
+\begin{enumerate}
+	\item $V = U + W$
+	\item $U \cap W = \{\vec{0}\}$
+\end{enumerate}
+Per la 1, ogni vettore $v$ di $V$ si scrive come somma di un vettore $u \in U$ e $w \in W$ ($\forall v \in V, \exists u \in U, w \in W : v = u + w$).\\
+Per mostrarne l'unicitá, supponiamo si possa scrivere anche come somma di altri due vettori $u\prime + w\prime, u\prime \in U, w\prime \in W$.\\
+Quindi, $v = u + w = u\prime + w\prime \iff \underbrace{u - u\prime}_{\in U} = \underbrace{w\prime - w}_{\in W} \implies \in U \cap W$. Per la 2, $U \cap W = \{\vec{0}\}$, quindi $u - u\prime = \vec{0} \iff u = u\prime, w\prime - w = \vec{0} \iff w = w\prime$.
+
+\subsubsection{Esempio}
+$R^2 = U \oplus W$, $U = \{(x,y) \in R^2 : y = 0\}$, $W = \{(x,y) \in R^2 : x = 0\}$ (assi cartesiani): ogni vettore in $R^2$ si scrive in modo unico come somma di $u \in U, w \in W$.
+
+\section{Applicazioni lineari}
+Siano $U$, $V$ spazi vettoriali su $K$. Un'applicazione lineare $f : V \to U$ é \textbf{lineare} se é compatibile con le operazioni di $V$ e $U$, ovvero se:
+\begin{itemize}
+	\item $\forall v_1, v_2 \in V, f(v_1 + v_2) = f(v_1) + f(v_2)$
+	\item $\forall v \in V, \forall a \in K, f(av) = af(v)$
+\end{itemize}
+equivalentemente, $\forall v_1, v_2 \in V, \forall a_1, a_2 \in K, f(a_1v_1 + a_2v_2) = a_1f(v_1) + a_2f(v_2)$ (coimplica 1 e 2).
+
+\subsection{Nucleo e immagine}
+Sia $f : V \to U$ applicazione lineare:
+\begin{itemize}
+	\item[] \textbf{nucleo} di $f$: $\Ker{f} = \{v \in V : f(v) = \vec{0}\}$
+	\item[] \textbf{immagine} di $f$: $\Ima{f} = \{u \in U : \exists v \in V : u = f(v)\}$
+\end{itemize}
+
+\subsubsection{Nucleo e immagine sottospazi vettoriali}
+\begin{enumerate}
+	\item $\Ker$ é un sottospazio vettoriale di $V$
+	\item $\Ima$ é un sottospazio vettoriale di $U$
+\end{enumerate}
+Dimostrazione:
+\begin{enumerate}
+	\item siano $v_1, v_2 \in \Ker{f}$ ($f(v_1) = f(v_2) = \vec{0}$), dobbiamo mostrare che anche $v_1 + v_2 \Ker{f}$:\\
+	$f(v_1 + v_2) = f(v_1) + f(v_2) = \vec{0} + \vec{0} = \vec{0}$ (ragionamento analogo per lo scalare)
+	\item siano $u_1, u_2 \in \Ima{f}$ ($\exists v_1, v_2 \in V : u_1 = f(v_1), u_2 = f(v_2)$), devo mostrare che anche $u_1 + u_2 \in \Ima{f}$:\\
+	$f(v_1 + v_2) = f(v_1) + f(v_2) = u_1 + u_2 \in \Ima{f}$, ovvero $\exists v_1 + v_2 \in V : u_1 + u_2 = f(v_1 + v_2)$ (ragionamento analogo per lo scalare)
+\end{enumerate}
+
+\subsection{Iniettivitá e suriettivitá}
+Sia $f : V \to U$ applicazione lineare:
+\begin{itemize}
+	\item $f$ é \textbf{suriettiva} $\iff$ $\Ima{f} = U$ ($\forall u \in U, \exists v \in V : u = f(v)$)
+	\item $f$ é \textbf{iniettiva} $\iff$ $\Ker{f} = \{\vec{0}\}$ ($\forall v_1, v_2, v_1 \ne v_2, f(v_1) \ne f(v_2)$)
+\end{itemize}
+
+\subsubsection{Dimostrazione dell'iniettivitá}
+\begin{itemize}
+	\item[1 $\implies$ 2] Poiché $f$ é lineare, $f(\vec{0}) = f(v-v) = f(v) - f(v) = \vec{0}$ (il vettore nullo viene mandato nel vettore nullo). Siccome $f$ é iniettiva, se $v \ne \vec{0}, f(v) \ne f(\vec{0})$ (solamente il vettore nullo viene mandato nel vettore nullo), quindi $\Ker{f} = \{\vec{0}\}$
+	\item 2 $\implies 1$ Siano $v_1, v_2 \in V : f(v_1) = f(v_2)$, devo mostrare che $v_1 = v_2$. Dalla 2, $f(v_1 - v_2) = f(v_1) - f(v_2) = \vec{0}$, ovvero $v_1 - v_2 \in \Ker{f}$, ma $\Ker{f} = \{\vec{0}\}$, quindi $v_1 - v_2 = \vec{0} \iff v_1 = v_2$, ovvero $f$ é iniettiva
+\end{itemize}
+
+\subsection{Teorema del rango}
+Sia $f : V \to U$ applicazione lineare:
+$$dim(V) = dim(\Ker{f}) + dim(\Ima{f})$$
+
+\subsubsection{Dimostrazione}
+Sia $v_1, \dots, v_k$ base di $\Ker{f}$ ($dim(\Ker{f}) = k$), la completo a una base $v_1, \dots, v_k, v_{k+1}, \dots, v_n$ di $V$ ($dim(V) = n$).\\
+Avendo una base di $V$, so che $\forall v \in V, \exists! a_1, \dots, a_n \in K : v = a_1v_1 + \dots + a_nv_n$.\\
+Poiché $f$ é lineare, $f(a_1v_1 + \dots + a_nv_n) = \underbrace{a_1v_1 + \dots a_kv_k}_{\in \Ker{f}} + a_{k+1}v_{k+1} + \dots + a_nv_n$.\\
+Questo significa che ogni vettore $v$ di $V$ si scrive come combinazione lineare di $v_{k+1}, \dots, v_n$, ovvero $\{v_{k+1}, \dots, v_n\}$ é una base di $\Ima{f}$ ($dim(\Ima{f} = n - k$).\\
+Infine, unendo i pezzi, ottengo $dim(V) = n = dim(\Ker{f}) + dim(\Ima{f}) = k + n - k$.
+
+\subsection{Rapporto tra dimensione e iniettivitá/suriettivitá}
+\begin{enumerate}
+	\item se $dim(V) > dim(U)$, allora $f$ \textbf{non puó essere iniettiva}
+	\item se $dim(V) < dim(U)$, allora $f$ \textbf{non puó essere suriettiva}
+	\item se $dim(V) = dim(U)$, allora $f$ \textbf{é biunivoca}
+\end{enumerate}
+
+\subsubsection{Dimostrazione}
+\begin{enumerate}
+	\item $dim(\Ima{f}) \le dim(U) < dim(V) \underbrace{=}_{\mbox{teorema del rango}} dim(\Ima{f}) + dim(\Ker{f}) \iff dim(\Ima{f}) < dim(\Ima{f}) + dim(\Ker{f}) \iff dim(\Ker{f})> 0 \implies \Ker{f} \ne \{\vec{0}\}$ ($f$ non é iniettiva)
+	\item $dim(\Ima{f}) + dim(\Ker{f}) < dim(U) \implies dim(\Ima{f}) \ne dim(U)$ ($dim(\Ker{f}) \ge 0$), quindi $f$ non é suriettiva perché non é $=U$
+	\item $dim(\Ker{f}) + dim(\Ima{f}) = dim(V) = dim(U)$ ma $dim(\Ima{f}) \le dim(U) \implies dim(\Ima{f}) = dim(U) \wedge dim(\Ker{f}) = 0$
+\end{enumerate}
 
 \end{document}
